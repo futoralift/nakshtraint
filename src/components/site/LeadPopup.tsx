@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
@@ -41,18 +40,8 @@ export function LeadPopup() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        showCloseButton={false}
         className="max-h-[92dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-none border-forest/20 p-0 sm:w-auto"
       >
-        <button
-          type="button"
-          onClick={() => handleOpenChange(false)}
-          aria-label="Close enquiry form"
-          className="absolute right-3 top-3 z-10 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-        >
-          <X className="size-4" />
-        </button>
-
         {submitted ? (
           <div className="px-6 py-12 text-center sm:px-10">
             <DialogTitle className="display text-3xl text-forest">THANK YOU</DialogTitle>
