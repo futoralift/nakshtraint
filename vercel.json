@@ -1,0 +1,4 @@
+{
+  "buildCommand": "vite build && nitro build --preset vercel",
+  "outputDirectory": ".vercel/output"
+}
