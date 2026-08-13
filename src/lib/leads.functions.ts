@@ -121,10 +121,10 @@ const constantTimeEquals = (a: string, b: string) => {
 export const adminLogin = createServerFn({ method: "POST" })
   .validator((data: { email: string; password: string }) => loginSchema.parse(data))
   .handler(async ({ data }) => {
-    const adminEmail = (process.env["ADMIN_EMAIL"] ?? "").trim().toLowerCase();
-    const adminPassword = process.env["ADMIN_PASSWORD"] ?? "";
-    const supabaseUrl = process.env["SUPABASE_URL"]!;
-    const publishableKey = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
+    const adminEmail = (globalThis.process?.env?.["ADMIN_EMAIL"] ?? "").trim().toLowerCase();
+    const adminPassword = globalThis.process?.env?.["ADMIN_PASSWORD"] ?? "";
+    const supabaseUrl = globalThis.process?.env?.["SUPABASE_URL"]!;
+    const publishableKey = globalThis.process?.env?.["SUPABASE_PUBLISHABLE_KEY"]!;
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
