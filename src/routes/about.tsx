@@ -41,13 +41,13 @@ function AboutPage() {
               Design, planning and execution under one roof.
             </h2>
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              Nakshtra Interior is an interior design studio based in {SITE.serviceArea}. We
-              work across residential, office and commercial spaces — from a single modular
-              kitchen to a complete turnkey project.
+              Nakshtra Interior is an interior design studio based in {SITE.serviceArea}. We work
+              across residential, office and commercial spaces — from a single modular kitchen to a
+              complete turnkey project.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Every project begins with the way you use your space. From there we plan the
-              layout, detail the materials and carry the work through to handover.
+              Every project begins with the way you use your space. From there we plan the layout,
+              detail the materials and carry the work through to handover.
             </p>
             <dl className="mt-10 grid gap-6 sm:grid-cols-2">
               <div className="border-t border-forest/25 pt-4">

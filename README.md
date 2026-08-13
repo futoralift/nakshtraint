@@ -55,27 +55,27 @@ https://www.facebook.com/share/1DQ2eUv1aF/
 
 Services:
 
-* Residential Interiors
-* Commercial Interiors
-* Office Interiors
-* Modular Kitchen
-* Bedroom Interiors
-* Turnkey Projects
-* Renovation
+- Residential Interiors
+- Commercial Interiors
+- Office Interiors
+- Modular Kitchen
+- Bedroom Interiors
+- Turnkey Projects
+- Renovation
 
 Target Customers:
 
-* Budget
-* Premium
-* Luxury
+- Budget
+- Premium
+- Luxury
 
 Primary visitor actions:
 
-* WhatsApp Us
-* Fill Enquiry Form
-* Call Us
-* Book Consultation
-* View Portfolio
+- WhatsApp Us
+- Fill Enquiry Form
+- Call Us
+- Book Consultation
+- View Portfolio
 
 Brand colour preference:
 
@@ -83,11 +83,11 @@ Brand colour preference:
 
 The visual direction should use a sophisticated combination of:
 
-* Deep forest green
-* Warm white
-* Soft beige
-* Natural wood tones
-* Very subtle premium metallic accents
+- Deep forest green
+- Warm white
+- Soft beige
+- Natural wood tones
+- Very subtle premium metallic accents
 
 Do NOT use bright neon green.
 
@@ -127,12 +127,12 @@ Use a premium modern interior environment.
 
 The hero should visually communicate:
 
-* luxury
-* architecture
-* craftsmanship
-* modern Indian interiors
-* sophistication
-* clean design
+- luxury
+- architecture
+- craftsmanship
+- modern Indian interiors
+- sophistication
+- clean design
 
 Main heading:
 
@@ -231,8 +231,8 @@ Heading:
 
 Services:
 
-* Office Interiors
-* Commercial Interiors
+- Office Interiors
+- Commercial Interiors
 
 ---
 
@@ -310,13 +310,13 @@ Create a visual gallery that feels like architectural presentation boards.
 
 Categories:
 
-* All
-* Residential
-* Kitchen
-* Bedroom
-* Office
-* Commercial
-* Renovation
+- All
+- Residential
+- Kitchen
+- Bedroom
+- Office
+- Commercial
+- Renovation
 
 Use large project imagery.
 
@@ -324,10 +324,10 @@ Add subtle hover interactions.
 
 On hover:
 
-* image slightly zooms
-* project title appears
-* category appears
-* subtle green overlay
+- image slightly zooms
+- project title appears
+- category appears
+- subtle green overlay
 
 On click:
 
@@ -463,24 +463,24 @@ Form fields:
 
 Dropdown:
 
-* Immediately
-* Within 1 Month
-* 1–3 Months
-* 3–6 Months
-* Just Exploring
+- Immediately
+- Within 1 Month
+- 1–3 Months
+- 3–6 Months
+- Just Exploring
 
 **What are you looking for?**
 
 Multi-select:
 
-* Residential Interior
-* Modular Kitchen
-* Bedroom
-* Office
-* Commercial
-* Turnkey Project
-* Renovation
-* Other
+- Residential Interior
+- Modular Kitchen
+- Bedroom
+- Office
+- Commercial
+- Turnkey Project
+- Renovation
+- Other
 
 **Project Requirements**
 
@@ -498,15 +498,15 @@ CTA:
 
 The popup must:
 
-* appear after 5 seconds
-* have a smooth fade/scale animation
-* have a visible close button
-* work perfectly on mobile
-* prevent background scrolling while open
-* not break the page layout
-* have accessible labels
-* support keyboard navigation
-* have proper focus handling
+- appear after 5 seconds
+- have a smooth fade/scale animation
+- have a visible close button
+- work perfectly on mobile
+- prevent background scrolling while open
+- not break the page layout
+- have accessible labels
+- support keyboard navigation
+- have proper focus handling
 
 IMPORTANT:
 
@@ -516,10 +516,10 @@ Use localStorage/cookie logic so that after a user closes or submits the popup, 
 
 Recommended behaviour:
 
-* First visit → show after 5 seconds
-* Close → don't show again during current session
-* Submit → don't show again during current session
-* Refresh after closing → keep popup closed during that session
+- First visit → show after 5 seconds
+- Close → don't show again during current session
+- Submit → don't show again during current session
+- Refresh after closing → keep popup closed during that session
 
 You can optionally allow it to appear again on a future visit after a reasonable period.
 
@@ -531,32 +531,32 @@ Validate everything on the frontend AND backend.
 
 Full Name:
 
-* required
-* minimum reasonable character length
+- required
+- minimum reasonable character length
 
 Phone:
 
-* required
-* validate Indian phone number
-* accept +91 format
-* normalize stored number
+- required
+- validate Indian phone number
+- accept +91 format
+- normalize stored number
 
 Email:
 
-* required
-* valid email format
+- required
+- valid email format
 
 Location:
 
-* required
+- required
 
 Project Timeline:
 
-* optional
+- optional
 
 Requirements:
 
-* optional
+- optional
 
 Do not trust frontend validation alone.
 
@@ -589,11 +589,11 @@ status
 
 For `status`, support:
 
-* New
-* Contacted
-* Qualified
-* Converted
-* Closed
+- New
+- Contacted
+- Qualified
+- Converted
+- Closed
 
 For `source`, initially store:
 
@@ -601,11 +601,11 @@ For `source`, initially store:
 
 Later this can support:
 
-* Website
-* Instagram
-* Facebook
-* WhatsApp
-* Referral
+- Website
+- Instagram
+- Facebook
+- WhatsApp
+- Referral
 
 ---
 
@@ -617,11 +617,11 @@ If the same visitor submits multiple times, intelligently handle duplicates.
 
 At minimum:
 
-* store every legitimate enquiry
-* detect repeated phone/email submissions
-* prevent accidental double submission caused by button double-click
-* disable submit button while request is processing
-* show loading state
+- store every legitimate enquiry
+- detect repeated phone/email submissions
+- prevent accidental double submission caused by button double-click
+- disable submit button while request is processing
+- show loading state
 
 Example:
 
@@ -691,12 +691,12 @@ IMPORTANT SECURITY REQUIREMENT:
 
 DO NOT hardcode these credentials in:
 
-* React components
-* frontend JavaScript
-* HTML
-* public environment variables
-* client-side localStorage
-* source code visible in browser
+- React components
+- frontend JavaScript
+- HTML
+- public environment variables
+- client-side localStorage
+- source code visible in browser
 
 Store them securely using the backend/authentication system and environment secrets.
 
@@ -704,11 +704,11 @@ The password must never be returned to the frontend.
 
 Prefer secure authentication with:
 
-* hashed password
-* HTTP-only session/token
-* secure cookies
-* server-side authentication
-* protected routes
+- hashed password
+- HTTP-only session/token
+- secure cookies
+- server-side authentication
+- protected routes
 
 Do not store the admin password in localStorage.
 
@@ -766,20 +766,20 @@ The API itself must be protected.
 
 Also implement:
 
-* secure authentication
-* password hashing
-* secure session/token handling
-* HTTP-only cookies where appropriate
-* CSRF protection where applicable
-* rate limiting on login
-* rate limiting on lead submission
-* input sanitization
-* backend validation
-* protection against SQL injection
-* protection against XSS
-* protection against unauthorized API access
-* no sensitive credentials in frontend code
-* no lead information exposed through public APIs
+- secure authentication
+- password hashing
+- secure session/token handling
+- HTTP-only cookies where appropriate
+- CSRF protection where applicable
+- rate limiting on login
+- rate limiting on lead submission
+- input sanitization
+- backend validation
+- protection against SQL injection
+- protection against XSS
+- protection against unauthorized API access
+- no sensitive credentials in frontend code
+- no lead information exposed through public APIs
 
 ---
 
@@ -811,15 +811,15 @@ Create a professional table.
 
 Columns:
 
-* Name
-* Phone
-* Email
-* Location
-* Service
-* Timeline
-* Status
-* Submitted
-* Actions
+- Name
+- Phone
+- Email
+- Location
+- Service
+- Timeline
+- Status
+- Submitted
+- Actions
 
 Each lead should be clickable.
 
@@ -855,11 +855,11 @@ Admin should be able to change status.
 
 Status dropdown:
 
-* New
-* Contacted
-* Qualified
-* Converted
-* Closed
+- New
+- Contacted
+- Qualified
+- Converted
+- Closed
 
 Save the status to the database.
 
@@ -889,21 +889,21 @@ Make these actions available directly from the lead details.
 
 Admin should be able to search leads by:
 
-* name
-* phone
-* email
-* location
+- name
+- phone
+- email
+- location
 
 Filters:
 
-* status
-* service
-* date
+- status
+- service
+- date
 
 Sort:
 
-* newest first
-* oldest first
+- newest first
+- oldest first
 
 Default:
 
@@ -935,20 +935,20 @@ The main purpose is lead management.
 
 Website must work perfectly on:
 
-* Desktop
-* Laptop
-* Tablet
-* Mobile
+- Desktop
+- Laptop
+- Tablet
+- Mobile
 
 Especially optimize the popup for mobile.
 
 On mobile:
 
-* modal should fit viewport
-* form should scroll internally if necessary
-* no horizontal scrolling
-* large enough touch targets
-* WhatsApp CTA should be easy to tap
+- modal should fit viewport
+- form should scroll internally if necessary
+- no horizontal scrolling
+- large enough touch targets
+- WhatsApp CTA should be easy to tap
 
 ---
 
@@ -1000,22 +1000,22 @@ The website must look impressive without becoming unnecessarily heavy.
 
 Optimize:
 
-* 3D assets
-* images
-* videos
-* textures
-* JavaScript
-* fonts
+- 3D assets
+- images
+- videos
+- textures
+- JavaScript
+- fonts
 
 Use:
 
-* lazy loading
-* compressed images
-* WebP/AVIF where appropriate
-* optimized GLB models
-* responsive images
-* code splitting
-* lazy-loaded 3D scenes
+- lazy loading
+- compressed images
+- WebP/AVIF where appropriate
+- optimized GLB models
+- responsive images
+- code splitting
+- lazy-loaded 3D scenes
 
 Do not load huge 3D assets before they are needed.
 
@@ -1037,10 +1037,10 @@ For lower-powered devices:
 
 Use:
 
-* optimized video
-* static renders
-* lightweight animations
-* parallax
+- optimized video
+- static renders
+- lightweight animations
+- parallax
 
 The website should remain visually premium even if full 3D is disabled.
 
@@ -1062,13 +1062,13 @@ Use semantic HTML.
 
 Proper:
 
-* H1
-* H2
-* H3
-* alt text
-* Open Graph metadata
-* favicon
-* canonical URL
+- H1
+- H2
+- H3
+- alt text
+- Open Graph metadata
+- favicon
+- canonical URL
 
 Add LocalBusiness/InteriorDesign-related structured data where appropriate.
 
@@ -1104,12 +1104,12 @@ https://www.facebook.com/share/1DQ2eUv1aF/
 
 Do not invent:
 
-* awards
-* years of experience
-* number of projects
-* client testimonials
-* certifications
-* statistics
+- awards
+- years of experience
+- number of projects
+- client testimonials
+- certifications
+- statistics
 
 Only use information actually provided by the client.
 
@@ -1148,10 +1148,10 @@ Never store plaintext passwords.
 
 Use appropriate indexes for:
 
-* email
-* phone
-* status
-* created_at
+- email
+- phone
+- status
+- created_at
 
 ---
 
@@ -1167,11 +1167,11 @@ Used by the website popup.
 
 This endpoint must:
 
-* validate input
-* sanitize input
-* rate limit requests
-* create lead
-* return success/error
+- validate input
+- sanitize input
+- rate limit requests
+- create lead
+- return success/error
 
 ### Admin
 
@@ -1197,13 +1197,13 @@ Lead information is private business data.
 
 Never:
 
-* expose leads in public APIs
-* include leads in page source
-* expose database credentials
-* expose admin credentials
-* send the entire lead database to unauthenticated clients
-* store admin password in localStorage
-* hardcode credentials into frontend code
+- expose leads in public APIs
+- include leads in page source
+- expose database credentials
+- expose admin credentials
+- send the entire lead database to unauthenticated clients
+- store admin password in localStorage
+- hardcode credentials into frontend code
 
 Only authenticated admins should be able to access lead data.
 
@@ -1241,9 +1241,9 @@ Add proper loading states everywhere.
 
 Website:
 
-* 3D scene loading indicator
-* smooth initial loading
-* image loading placeholders
+- 3D scene loading indicator
+- smooth initial loading
+- image loading placeholders
 
 Popup:
 
@@ -1251,10 +1251,10 @@ Popup:
 
 Admin:
 
-* skeleton loading for leads
-* table loading state
-* login loading state
-* status update loading state
+- skeleton loading for leads
+- table loading state
+- login loading state
+- status update loading state
 
 ---
 
@@ -1286,21 +1286,21 @@ Avoid excessive font combinations.
 
 Visual language:
 
-* architectural
-* minimal
-* premium
-* editorial
-* cinematic
-* modern
+- architectural
+- minimal
+- premium
+- editorial
+- cinematic
+- modern
 
 Avoid:
 
-* generic gradient backgrounds
-* excessive rounded cards
-* childish animations
-* neon colours
-* excessive shadows
-* stock-template appearance
+- generic gradient backgrounds
+- excessive rounded cards
+- childish animations
+- neon colours
+- excessive shadows
+- stock-template appearance
 
 ---
 
@@ -1310,22 +1310,22 @@ Animations should feel intentional.
 
 Use:
 
-* smooth scroll
-* camera movement
-* fade
-* scale
-* subtle parallax
-* architectural line animations
-* image reveal
-* text reveal
+- smooth scroll
+- camera movement
+- fade
+- scale
+- subtle parallax
+- architectural line animations
+- image reveal
+- text reveal
 
 Avoid:
 
-* bouncing animations
-* excessive spinning
-* random floating elements
-* animation on every component
-* slow transitions that make navigation frustrating
+- bouncing animations
+- excessive spinning
+- random floating elements
+- animation on every component
+- slow transitions that make navigation frustrating
 
 The website should feel **luxurious, not gimmicky**.
 
@@ -1335,15 +1335,15 @@ The website should feel **luxurious, not gimmicky**.
 
 Implement:
 
-* keyboard navigation
-* visible focus states
-* proper labels
-* semantic HTML
-* alt text
-* accessible modal
-* ESC to close popup
-* sufficient colour contrast
-* reduced-motion support
+- keyboard navigation
+- visible focus states
+- proper labels
+- semantic HTML
+- alt text
+- accessible modal
+- ESC to close popup
+- sufficient colour contrast
+- reduced-motion support
 
 If the user has `prefers-reduced-motion`, significantly reduce cinematic animations.
 
@@ -1353,15 +1353,15 @@ If the user has `prefers-reduced-motion`, significantly reduce cinematic animati
 
 Use local/session storage only for non-sensitive UI state such as:
 
-* popup dismissed
-* popup submitted
-* animation preferences
+- popup dismissed
+- popup submitted
+- animation preferences
 
 NEVER store:
 
-* admin passwords
-* admin authentication secrets
-* lead data
+- admin passwords
+- admin authentication secrets
+- lead data
 
 Use secure server-side authentication/session mechanisms for admin access.
 
@@ -1520,18 +1520,18 @@ Admin pages become inaccessible again
 
 Before final delivery, verify:
 
-* `/admin` cannot be accessed without login
-* admin APIs cannot be accessed without authentication
-* credentials are not present in frontend source
-* password is not stored as plaintext
-* lead data is not publicly accessible
-* users cannot modify another lead through public APIs
-* SQL injection protection works
-* XSS input is sanitized
-* login is rate limited
-* duplicate form submissions are controlled
-* backend validation works even if frontend validation is bypassed
-* sensitive server errors are not exposed
+- `/admin` cannot be accessed without login
+- admin APIs cannot be accessed without authentication
+- credentials are not present in frontend source
+- password is not stored as plaintext
+- lead data is not publicly accessible
+- users cannot modify another lead through public APIs
+- SQL injection protection works
+- XSS input is sanitized
+- login is rate limited
+- duplicate form submissions are controlled
+- backend validation works even if frontend validation is bypassed
+- sensitive server errors are not exposed
 
 ---
 

@@ -102,9 +102,7 @@ export function PortfolioGallery({
           <p className="label-caps text-wood">Portfolio</p>
           <h2 className="mt-4 text-[clamp(1.8rem,4vw,3rem)] leading-tight">{heading}</h2>
           {intro ? (
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-              {intro}
-            </p>
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">{intro}</p>
           ) : null}
         </div>
 
@@ -145,9 +143,7 @@ export function PortfolioGallery({
               <span className="absolute inset-0 bg-forest/0 transition-colors duration-500 group-hover:bg-forest/45" />
               <span className="absolute inset-x-0 bottom-0 translate-y-3 p-5 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                 <span className="label-caps block text-brass">{project.category}</span>
-                <span className="display mt-1 block text-xl text-background">
-                  {project.title}
-                </span>
+                <span className="display mt-1 block text-xl text-background">{project.title}</span>
               </span>
             </button>
           ))}
@@ -171,11 +167,7 @@ export function PortfolioGallery({
             <X className="size-6" />
           </button>
           <figure className="max-h-full w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={open.image}
-              alt={open.alt}
-              className="max-h-[75svh] w-full object-contain"
-            />
+            <img src={open.image} alt={open.alt} className="max-h-[75svh] w-full object-contain" />
             <figcaption className="mt-4 text-center">
               <span className="label-caps text-brass">{open.category}</span>
               <span className="display mt-1 block text-2xl text-background">{open.title}</span>

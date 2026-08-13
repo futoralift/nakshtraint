@@ -8,9 +8,14 @@ export function SiteFooter() {
     <footer className="bg-forest-deep text-background">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-3">
         <div>
-          <p className="display text-2xl tracking-[0.3em]">NAKSHTRA</p>
-          <p className="label-caps mt-1 text-background/60">Interior</p>
-          <p className="mt-6 max-w-xs text-sm leading-relaxed text-background/70">
+          <Link to="/" className="inline-block">
+            <img
+              src="/logo.png"
+              alt="Nakshtra Interior"
+              className="h-12 sm:h-14 w-auto object-contain"
+            />
+          </Link>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-background/70">
             Interior design and turnkey execution in {SITE.serviceArea}.
           </p>
           <div className="mt-6 flex gap-4">

@@ -74,7 +74,8 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
     onError: () => toast.error("Couldn't update the status. Please try again."),
   });
 
-  const leads = leadsQuery.data ?? [];
+  const rawLeads = leadsQuery.data;
+  const leads = useMemo(() => rawLeads ?? [], [rawLeads]);
 
   const stats = useMemo(
     () => ({
@@ -98,8 +99,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       const matchesStatus = statusFilter === "All" || lead.status === statusFilter;
       const matchesService =
         serviceFilter === "All" || (lead.service_interest ?? []).includes(serviceFilter);
-      const matchesDate =
-        !dateFilter || lead.created_at.slice(0, 10) === dateFilter;
+      const matchesDate = !dateFilter || lead.created_at.slice(0, 10) === dateFilter;
       return matchesTerm && matchesStatus && matchesService && matchesDate;
     });
     return list.sort((a, b) =>
@@ -113,10 +113,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
     <div className="min-h-screen bg-secondary lg:flex">
       <aside className="bg-sidebar text-sidebar-foreground lg:min-h-screen lg:w-60 lg:shrink-0">
         <div className="px-6 py-6">
-          <p className="display text-lg tracking-[0.3em]">NAKSHTRA</p>
-          <p className="label-caps mt-1 text-[0.55rem] text-sidebar-foreground/60">
-            Interior
-          </p>
+          <img src="/logo.png" alt="Nakshtra Interior" className="h-10 w-auto object-contain" />
         </div>
         <nav aria-label="Admin sections" className="px-3 pb-6">
           <ul className="flex gap-1 lg:flex-col">
@@ -161,9 +158,9 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
           <section className="mt-8 max-w-xl border border-border bg-card p-6">
             <h2 className="text-lg">Settings</h2>
             <p className="mt-3 text-sm text-muted-foreground">
-              Admin access is managed securely on the server. To change the admin email or
-              password, update the stored credentials in your project&apos;s backend
-              secrets — they are never stored in this dashboard or in your browser.
+              Admin access is managed securely on the server. To change the admin email or password,
+              update the stored credentials in your project&apos;s backend secrets — they are never
+              stored in this dashboard or in your browser.
             </p>
             <Button variant="outline" className="mt-6" onClick={onSignOut}>
               Sign out

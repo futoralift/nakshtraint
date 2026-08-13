@@ -45,16 +45,13 @@ export function TiersSection() {
           A SPACE FOR EVERY VISION.
         </h2>
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          We design to the requirement of the project — the approach adapts, the care
-          does not.
+          We design to the requirement of the project — the approach adapts, the care does not.
         </p>
 
         <div className="mt-14 grid gap-10 md:grid-cols-3">
           {TIERS.map((tier, index) => (
             <div key={tier.name} className="border-t border-forest/25 pt-6">
-              <span className="label-caps text-brass">
-                {String(index + 1).padStart(2, "0")}
-              </span>
+              <span className="label-caps text-brass">{String(index + 1).padStart(2, "0")}</span>
               <h3 className="display mt-4 text-3xl uppercase tracking-[0.16em] text-forest">
                 {tier.name}
               </h3>
@@ -82,9 +79,7 @@ export function WhySection() {
           {REASONS.map((reason) => (
             <div key={reason.title} className="border-l border-forest/25 pl-6">
               <dt className="text-xl text-forest">{reason.title}</dt>
-              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {reason.body}
-              </dd>
+              <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">{reason.body}</dd>
             </div>
           ))}
         </dl>

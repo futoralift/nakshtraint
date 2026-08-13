@@ -49,26 +49,21 @@ export function AdminLogin({ onSignedIn }: { onSignedIn: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-forest-deep px-5 py-16">
       <div className="w-full max-w-sm">
         <div className="text-center">
-          <p className="display text-xl tracking-[0.34em] text-background">NAKSHTRA</p>
-          <p className="label-caps mt-1 text-background/60">Interior</p>
+          <img
+            src="/logo.png"
+            alt="Nakshtra Interior"
+            className="mx-auto h-12 w-auto object-contain"
+          />
         </div>
 
         <div className="mt-10 border border-background/15 bg-card p-8">
           <h1 className="display text-2xl text-forest">Admin Portal</h1>
-          <p className="mt-2 text-xs text-muted-foreground">
-            Authorised access only.
-          </p>
+          <p className="mt-2 text-xs text-muted-foreground">Authorised access only.</p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <div className="space-y-2">
               <Label htmlFor="admin-email">Email</Label>
-              <Input
-                id="admin-email"
-                name="email"
-                type="email"
-                autoComplete="username"
-                required
-              />
+              <Input id="admin-email" name="email" type="email" autoComplete="username" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="admin-password">Password</Label>

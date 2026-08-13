@@ -13,29 +13,30 @@ const phoneSchema = z
 const sanitize = (value: string) =>
   value
     .replace(/[<>]/g, "")
+    // eslint-disable-next-line no-control-regex
     .replace(/\u0000/g, "")
     .trim()
     .slice(0, 2000);
 
 export const leadInputSchema = z.object({
-  fullName: z
-    .string()
-    .trim()
-    .min(2, "Please enter your full name.")
-    .max(120)
-    .transform(sanitize),
+  fullName: z.string().trim().min(2, "Please enter your full name.").max(120).transform(sanitize),
   phone: phoneSchema,
   email: z.string().trim().toLowerCase().email("Enter a valid email address.").max(160),
   location: z.string().trim().min(2, "Please enter your location.").max(160).transform(sanitize),
   projectTimeline: z.string().trim().max(60).optional().or(z.literal("")),
   serviceInterest: z.array(z.string().trim().max(60)).max(10).optional(),
-  requirements: z.string().trim().max(2000).optional().transform((v) => (v ? sanitize(v) : v)),
+  requirements: z
+    .string()
+    .trim()
+    .max(2000)
+    .optional()
+    .transform((v) => (v ? sanitize(v) : v)),
 });
 
 export type LeadInput = z.input<typeof leadInputSchema>;
 
 export const submitLead = createServerFn({ method: "POST" })
-  .inputValidator((data: LeadInput) => leadInputSchema.parse(data))
+  .validator((data: LeadInput) => leadInputSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
@@ -118,7 +119,7 @@ const constantTimeEquals = (a: string, b: string) => {
 };
 
 export const adminLogin = createServerFn({ method: "POST" })
-  .inputValidator((data: { email: string; password: string }) => loginSchema.parse(data))
+  .validator((data: { email: string; password: string }) => loginSchema.parse(data))
   .handler(async ({ data }) => {
     const adminEmail = (process.env["ADMIN_EMAIL"] ?? "").trim().toLowerCase();
     const adminPassword = process.env["ADMIN_PASSWORD"] ?? "";

@@ -9,9 +9,7 @@ export function ServicesGrid({ heading = "WHAT WE DESIGN" }: { heading?: string 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div ref={ref} data-visible={visible} className="reveal">
           <p className="label-caps text-wood">Services</p>
-          <h2 className="mt-4 max-w-2xl text-[clamp(1.8rem,4vw,3rem)] leading-tight">
-            {heading}
-          </h2>
+          <h2 className="mt-4 max-w-2xl text-[clamp(1.8rem,4vw,3rem)] leading-tight">{heading}</h2>
           <div className="hairline mt-10" />
         </div>
 

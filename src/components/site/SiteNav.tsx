@@ -26,30 +26,21 @@ export function SiteNav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled
-          ? "border-b border-border/60 bg-background/85 backdrop-blur-md"
-          : "bg-transparent"
+        scrolled ? "border-b border-border/60 bg-background/85 backdrop-blur-md" : "bg-transparent"
       }`}
     >
       <nav
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8"
       >
-        <Link to="/" className="group flex flex-col leading-none" onClick={() => setOpen(false)}>
-          <span
-            className={`display text-lg tracking-[0.32em] ${
-              scrolled ? "text-forest" : "text-background"
+        <Link to="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
+          <img
+            src="/logo.png"
+            alt="Nakshtra Interior"
+            className={`h-9 sm:h-11 w-auto object-contain transition-all duration-300 ${
+              scrolled ? "brightness-0" : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             }`}
-          >
-            NAKSHTRA
-          </span>
-          <span
-            className={`label-caps text-[0.55rem] ${
-              scrolled ? "text-muted-foreground" : "text-background/70"
-            }`}
-          >
-            Interior · Pune
-          </span>
+          />
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
@@ -70,7 +61,12 @@ export function SiteNav() {
         </ul>
 
         <div className="flex items-center gap-3">
-          <Button asChild variant={scrolled ? "default" : "outline"} size="sm" className="hidden md:inline-flex">
+          <Button
+            asChild
+            variant={scrolled ? "default" : "outline"}
+            size="sm"
+            className="hidden md:inline-flex"
+          >
             <Link to="/contact">Book Consultation</Link>
           </Button>
           <button

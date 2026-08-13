@@ -32,8 +32,8 @@ function ServicesPage() {
             EVERY DETAIL, DESIGNED.
           </h1>
           <p className="mt-6 max-w-xl text-sm leading-relaxed text-background/80 sm:text-base">
-            Interior design and execution across homes, kitchens, bedrooms, offices and
-            commercial spaces in Pune.
+            Interior design and execution across homes, kitchens, bedrooms, offices and commercial
+            spaces in Pune.
           </p>
         </div>
       </section>

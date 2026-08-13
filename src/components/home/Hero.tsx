@@ -48,8 +48,7 @@ export function Hero() {
           CREATING EXPERIENCES.
         </h1>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-background/80 sm:text-base">
-          Thoughtfully designed interiors for the way you live, work and experience your
-          space.
+          Thoughtfully designed interiors for the way you live, work and experience your space.
         </p>
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg" variant="secondary">

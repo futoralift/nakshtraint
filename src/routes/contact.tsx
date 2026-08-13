@@ -91,8 +91,7 @@ function ContactPage() {
               <div className="py-10 text-center">
                 <h2 className="display text-3xl text-forest">THANK YOU</h2>
                 <p className="mt-4 text-sm text-muted-foreground">
-                  Your enquiry has been received. Our team will get in touch with you
-                  shortly.
+                  Your enquiry has been received. Our team will get in touch with you shortly.
                 </p>
                 <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                   <Button asChild>
@@ -108,9 +107,7 @@ function ContactPage() {
             ) : (
               <>
                 <h2 className="text-2xl">Tell us about your project</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Fields marked * are required.
-                </p>
+                <p className="mt-2 text-sm text-muted-foreground">Fields marked * are required.</p>
                 <div className="mt-8">
                   <LeadForm onSuccess={() => setSubmitted(true)} />
                 </div>

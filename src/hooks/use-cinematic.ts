@@ -37,8 +37,7 @@ export function useLightMode() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const smallScreen = window.matchMedia("(max-width: 768px)").matches;
     const nav = navigator as Navigator & { deviceMemory?: number };
-    const weakDevice =
-      (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4;
+    const weakDevice = (nav.hardwareConcurrency ?? 8) <= 4 || (nav.deviceMemory ?? 8) <= 4;
     setLight(reduced || (smallScreen && weakDevice));
   }, []);
 

@@ -4,8 +4,7 @@ export const SITE = {
   phoneTel: "+918855044699",
   whatsappNumber: "918855044699",
   email: "nakshtrainteriors96@gmail.com",
-  address:
-    "Balaji Crystal, Dalavi Nagar, Dalvinagar, Ambegaon Budruk, Pune, Maharashtra 411046",
+  address: "Balaji Crystal, Dalavi Nagar, Dalvinagar, Ambegaon Budruk, Pune, Maharashtra 411046",
   city: "Pune",
   serviceArea: "Ambegaon BK, Pune",
   instagram: "https://www.instagram.com/nakshtra_interior_pune",
@@ -75,12 +74,6 @@ export const TIMELINES = [
   "Just Exploring",
 ] as const;
 
-export const LEAD_STATUSES = [
-  "New",
-  "Contacted",
-  "Qualified",
-  "Converted",
-  "Closed",
-] as const;
+export const LEAD_STATUSES = ["New", "Contacted", "Qualified", "Converted", "Closed"] as const;
 
 export type LeadStatus = (typeof LEAD_STATUSES)[number];

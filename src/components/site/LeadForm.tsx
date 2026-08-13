@@ -78,23 +78,58 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="fullName">Full Name *</Label>
-          <Input id="fullName" name="fullName" autoComplete="name" required className={fieldClass("fullName")} aria-invalid={!!errors["fullName"]} />
-          {errors["fullName"] ? <p className="text-xs text-destructive">{errors["fullName"]}</p> : null}
+          <Input
+            id="fullName"
+            name="fullName"
+            autoComplete="name"
+            required
+            className={fieldClass("fullName")}
+            aria-invalid={!!errors["fullName"]}
+          />
+          {errors["fullName"] ? (
+            <p className="text-xs text-destructive">{errors["fullName"]}</p>
+          ) : null}
         </div>
         <div className="space-y-2">
           <Label htmlFor="phone">Phone Number *</Label>
-          <Input id="phone" name="phone" inputMode="tel" autoComplete="tel" placeholder="+91 98765 43210" required className={fieldClass("phone")} aria-invalid={!!errors["phone"]} />
+          <Input
+            id="phone"
+            name="phone"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="+91 98765 43210"
+            required
+            className={fieldClass("phone")}
+            aria-invalid={!!errors["phone"]}
+          />
           {errors["phone"] ? <p className="text-xs text-destructive">{errors["phone"]}</p> : null}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email Address *</Label>
-          <Input id="email" name="email" type="email" autoComplete="email" required className={fieldClass("email")} aria-invalid={!!errors["email"]} />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            className={fieldClass("email")}
+            aria-invalid={!!errors["email"]}
+          />
           {errors["email"] ? <p className="text-xs text-destructive">{errors["email"]}</p> : null}
         </div>
         <div className="space-y-2">
           <Label htmlFor="location">Location *</Label>
-          <Input id="location" name="location" placeholder="Ambegaon BK, Pune" required className={fieldClass("location")} aria-invalid={!!errors["location"]} />
-          {errors["location"] ? <p className="text-xs text-destructive">{errors["location"]}</p> : null}
+          <Input
+            id="location"
+            name="location"
+            placeholder="Ambegaon BK, Pune"
+            required
+            className={fieldClass("location")}
+            aria-invalid={!!errors["location"]}
+          />
+          {errors["location"] ? (
+            <p className="text-xs text-destructive">{errors["location"]}</p>
+          ) : null}
         </div>
       </div>
 

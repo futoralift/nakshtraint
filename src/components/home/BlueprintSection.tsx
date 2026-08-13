@@ -48,17 +48,15 @@ export function BlueprintSection() {
             FROM IDEA TO SPACE.
           </h2>
           <p className="mt-5 max-w-lg text-sm leading-relaxed text-background/75">
-            Nakshtra Interior handles complete projects — planning, drawings, materials
-            and on-site execution — not just decoration.
+            Nakshtra Interior handles complete projects — planning, drawings, materials and on-site
+            execution — not just decoration.
           </p>
         </div>
 
         <ol className="mt-16 grid gap-px border border-background/15 bg-background/10 sm:grid-cols-5">
           {STEPS.map((step, index) => (
             <li key={step} className="bg-forest-deep px-5 py-8">
-              <span className="label-caps text-brass/70">
-                {String(index + 1).padStart(2, "0")}
-              </span>
+              <span className="label-caps text-brass/70">{String(index + 1).padStart(2, "0")}</span>
               <p className="display mt-3 text-xl uppercase tracking-[0.14em]">{step}</p>
             </li>
           ))}

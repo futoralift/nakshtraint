@@ -39,9 +39,7 @@ export function LeadPopup() {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent
-        className="max-h-[92dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-none border-forest/20 p-0 sm:w-auto"
-      >
+      <DialogContent className="max-h-[92dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-none border-forest/20 p-0 sm:w-auto">
         {submitted ? (
           <div className="px-6 py-12 text-center sm:px-10">
             <DialogTitle className="display text-3xl text-forest">THANK YOU</DialogTitle>

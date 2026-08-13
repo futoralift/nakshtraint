@@ -63,9 +63,7 @@ export function Scene({
             {heading}
           </h2>
           {body ? (
-            <p className="mt-5 text-sm leading-relaxed text-background/80 sm:text-base">
-              {body}
-            </p>
+            <p className="mt-5 text-sm leading-relaxed text-background/80 sm:text-base">{body}</p>
           ) : null}
           {children ? <div className="mt-8">{children}</div> : null}
         </div>
