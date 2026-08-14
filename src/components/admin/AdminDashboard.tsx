@@ -23,6 +23,8 @@ type Lead = {
   status: LeadStatus;
   submission_count: number;
   created_at: string;
+  floor_plan_path: string | null;
+  floor_plan_name: string | null;
 };
 
 const NAV = ["Overview", "Leads", "Settings"] as const;
@@ -52,7 +54,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       const { data, error } = await supabase
         .from("leads")
         .select(
-          "id, full_name, phone, email, location, project_timeline, service_interest, requirements, source, status, submission_count, created_at",
+          "id, full_name, phone, email, location, project_timeline, service_interest, requirements, source, status, submission_count, created_at, floor_plan_path, floor_plan_name",
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
