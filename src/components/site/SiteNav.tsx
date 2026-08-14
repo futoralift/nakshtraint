@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { UspStrip } from "@/components/site/UspStrip";
 
 const LINKS = [
   { to: "/", label: "Home" },
@@ -29,7 +30,7 @@ export function SiteNav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        scrolled ? "border-b border-border/60 bg-background/85 backdrop-blur-md" : "bg-transparent"
+        scrolled ? "border-b border-border/60 bg-background/90 backdrop-blur-md" : "bg-black/30 backdrop-blur-xs"
       }`}
     >
       <nav
@@ -84,6 +85,9 @@ export function SiteNav() {
         </div>
       </nav>
 
+      {/* 🌿 Full-width green scrolling USP strip directly below navbar */}
+      <UspStrip />
+
       {open ? (
         <div className="border-t border-border/60 bg-background md:hidden">
           <ul className="mx-auto max-w-7xl px-5 py-4">
@@ -111,3 +115,4 @@ export function SiteNav() {
     </header>
   );
 }
+

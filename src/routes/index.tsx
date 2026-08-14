@@ -5,6 +5,7 @@ import Lenis from "lenis";
 import { CurtainIntro } from "@/components/world/CurtainIntro";
 import { VideoScrollWorld } from "@/components/world/VideoScrollWorld";
 import { PortfolioOverview } from "@/components/home/PortfolioOverview";
+import { YoutubeSection } from "@/components/home/YoutubeSection";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { TiersSection, WhySection } from "@/components/home/TiersSection";
 import { BrandSection } from "@/components/home/BrandSection";
@@ -198,10 +199,13 @@ function Home() {
 
       {/* ── SOLID GROUND CONTENT SECTIONS (Scrolls over Video Canvas) ── */}
       <div className="relative z-20 bg-background">
-        <ServicesGrid />
-        <div id="work">
-          <PortfolioOverview intro="A look at the environments we design — select any project to view rooms and spaces." />
+        <div id="portfolio">
+          <div id="work">
+            <PortfolioOverview intro="A look at the environments we design — select any project to view rooms and spaces." />
+          </div>
         </div>
+        <YoutubeSection />
+        <ServicesGrid />
         <TiersSection />
         <BrandSection />
         <ReviewsSection />
@@ -211,3 +215,4 @@ function Home() {
     </SiteLayout>
   );
 }
+

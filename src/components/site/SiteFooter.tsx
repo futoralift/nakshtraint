@@ -5,8 +5,8 @@ import { SITE, SERVICES } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="bg-forest-deep text-background">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-3">
+    <footer className="relative z-20 bg-forest-deep text-background border-t border-white/10">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link to="/" className="inline-block">
             <img
@@ -54,6 +54,37 @@ export function SiteFooter() {
         </div>
 
         <div>
+          <h2 className="label-caps text-brass">Quick Links</h2>
+          <ul className="mt-5 space-y-2.5 text-sm text-background/75">
+            <li>
+              <Link to="/" className="transition-colors hover:text-background">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/projects" className="transition-colors hover:text-background">
+                Selected Projects
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="transition-colors hover:text-background">
+                About Studio
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className="font-medium text-brass transition-colors hover:text-background flex items-center gap-1.5">
+                <span>FAQ &amp; Help</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="transition-colors hover:text-background">
+                Book Consultation
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
           <h2 className="label-caps text-brass">Contact</h2>
           <ul className="mt-5 space-y-4 text-sm text-background/75">
             <li className="flex gap-3">
@@ -77,22 +108,11 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-background/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-background/70 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-center px-5 py-6 text-xs text-background/70 sm:px-8 text-center">
           <p>© {new Date().getFullYear()} Nakshtra Interior. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <a
-              href={`tel:${SITE.phoneTel}`}
-              className="inline-flex items-center gap-1.5 font-medium text-brass transition-colors hover:underline"
-            >
-              <Phone className="size-3.5" /> Call {SITE.phoneDisplay}
-            </a>
-            <span className="text-background/30">·</span>
-            <Link to="/admin" className="hover:text-background">
-              Admin
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
   );
 }
+
