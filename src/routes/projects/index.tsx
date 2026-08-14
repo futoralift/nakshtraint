@@ -23,13 +23,13 @@ export const Route = createFileRoute("/projects/")({
 function ProjectsIndexPage() {
   return (
     <SiteLayout>
-      <section className="bg-forest-deep px-4 pb-20 pt-32 text-background sm:px-6 lg:px-8 sm:pb-24 sm:pt-40">
+      <section className="bg-forest-deep px-4 pb-10 pt-24 text-background sm:px-6 lg:px-8 sm:pb-12 sm:pt-28">
         <div className="mx-auto max-w-7xl">
-          <p className="label-caps text-brass">Projects</p>
-          <h1 className="mt-5 max-w-3xl text-[clamp(2.2rem,5.5vw,4rem)] leading-[1]">
+          <p className="label-caps text-brass text-[0.65rem]">Projects</p>
+          <h1 className="mt-2 max-w-3xl text-[clamp(1.8rem,4vw,3rem)] leading-[1.05]">
             PRESENTATION BOARDS.
           </h1>
-          <p className="mt-6 max-w-xl text-sm leading-relaxed text-background/80 sm:text-base">
+          <p className="mt-2 max-w-xl text-xs sm:text-sm leading-relaxed text-background/80">
             Select any project to explore its designed spaces and room-by-room details.
           </p>
         </div>

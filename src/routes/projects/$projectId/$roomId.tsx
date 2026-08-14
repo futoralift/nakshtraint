@@ -188,9 +188,9 @@ function RoomGalleryPage() {
   return (
     <SiteLayout>
       {/* Header */}
-      <section className="bg-forest-deep px-4 pb-16 pt-32 text-background sm:px-6 lg:px-8 sm:pb-20 sm:pt-40">
+      <section className="bg-forest-deep px-4 pb-8 pt-24 text-background sm:px-6 lg:px-8 sm:pb-10 sm:pt-28">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-center gap-2 mb-6 text-xs">
+          <div className="flex flex-wrap items-center gap-2 mb-4 text-xs">
             <Link
               to="/projects"
               className="flex items-center gap-1.5 label-caps text-brass/80 hover:text-brass transition-colors group"
@@ -210,24 +210,24 @@ function RoomGalleryPage() {
             <span className="label-caps text-brass">{room.name}</span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-3xl" aria-hidden="true">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl" aria-hidden="true">
               {room.icon}
             </span>
-            <p className="label-caps text-brass">{project.title} · {project.location}</p>
+            <p className="label-caps text-brass text-[0.65rem]">{project.title} · {project.location}</p>
           </div>
 
-          <h1 className="mt-4 max-w-3xl text-[clamp(2.2rem,5.5vw,3.8rem)] leading-[1]">
+          <h1 className="mt-2 max-w-3xl text-[clamp(1.8rem,4vw,2.8rem)] leading-[1.05]">
             {room.name.toUpperCase()}
           </h1>
-          <p className="mt-4 text-sm text-background/80">
+          <p className="mt-2 text-xs sm:text-sm text-background/80">
             {room.images.length} high-resolution photographs
           </p>
         </div>
       </section>
 
       {/* Gallery Section — 2 in a row in mobile, 4 in a row in laptop */}
-      <section className="bg-secondary py-16 sm:py-24">
+      <section className="bg-secondary py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* 2 in a row in mobile, 4 in a row in laptop */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
