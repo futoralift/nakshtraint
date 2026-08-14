@@ -13,5 +13,7 @@ export default defineConfig({
   },
   nitro: {
     preset: "vercel",
+    // @ts-expect-error - Nitro inlineDynamicImports is required to prevent chunk-splitting from omitting createMiddleware on Vercel SSR
+    inlineDynamicImports: true,
   },
 });
