@@ -67,11 +67,11 @@ export const SERVICE_INTERESTS = [
 ] as const;
 
 export const TIMELINES = [
-  "Immediately",
+  "Already Received",
+  "Within 15 Days",
   "Within 1 Month",
-  "1–3 Months",
-  "3–6 Months",
-  "Just Exploring",
+  "Within 3 Months",
+  "Not Yet Decided",
 ] as const;
 
 export const LEAD_STATUSES = ["New", "Contacted", "Qualified", "Converted", "Closed"] as const;

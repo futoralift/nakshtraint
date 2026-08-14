@@ -12,7 +12,6 @@ export default defineConfig({
     server: { entry: "server" },
   },
   nitro: {
-    preset: "vercel",
-    inlineDynamicImports: true
+    preset: "vercel"
   }
 });

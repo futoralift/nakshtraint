@@ -1,7 +1,7 @@
 import "./lib/error-capture";
 
 // Ensure createMiddleware is defined globally if Nitro SSR bundle tree-shaking omits it
-if (typeof (globalThis as Record<string, unknown>).createMiddleware !== "function") {
+if (typeof (globalThis as any).createMiddleware !== "function") {
   const createMiddlewareImpl = (options: unknown, __opts: unknown) => {
     const resolvedOptions = { type: "request", ...((__opts as object) || (options as object)) };
     const setValidator = (validator: unknown) =>
@@ -15,7 +15,7 @@ if (typeof (globalThis as Record<string, unknown>).createMiddleware !== "functio
       server: (s: unknown) => createMiddlewareImpl({}, Object.assign(resolvedOptions, { server: s })),
     };
   };
-  (globalThis as Record<string, unknown>).createMiddleware = createMiddlewareImpl;
+  (globalThis as any).createMiddleware = createMiddlewareImpl;
 }
 
 import { consumeLastCapturedError } from "./lib/error-capture";

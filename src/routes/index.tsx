@@ -30,7 +30,6 @@ export const Route = createFileRoute("/")({
 function Home() {
   const scrollProgress = useRef(0);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [curtainDone, setCurtainDone] = useState(false);
 
   useEffect(() => {
     // Reset scroll position to top on refresh so frame sequence always starts cleanly at frame 001
@@ -74,7 +73,7 @@ function Home() {
   return (
     <SiteLayout>
       {/* 🎭 Opening Curtain Animation */}
-      <CurtainIntro onComplete={() => setCurtainDone(true)} />
+      <CurtainIntro onComplete={() => {}} />
 
       {/* 🎥 220 Ultra-Lightweight Compressed Image Sequence Background */}
       <VideoScrollWorld scrollProgress={scrollProgress} frameCount={220} ext="jpg" />
@@ -110,7 +109,7 @@ function Home() {
         </section>
 
         {/* ── ROOM 1: LIVING ROOM ── */}
-        <section id="living" className="flex h-[120svh] w-full items-center px-5 sm:px-8">
+        <section id="living" className="flex h-[100svh] w-full items-center px-5 sm:px-8">
           <div className="mx-auto w-full max-w-7xl">
             <div className="max-w-xl rounded-sm border border-white/20 bg-black/60 p-8 backdrop-blur-md sm:p-12">
               <p className="label-caps text-brass">01 · Residential Interiors</p>
@@ -133,7 +132,7 @@ function Home() {
         {/* ── ROOM 2: KITCHEN ── */}
         <section
           id="kitchen"
-          className="flex h-[120svh] w-full items-center justify-end px-5 sm:px-8"
+          className="flex h-[100svh] w-full items-center justify-end px-5 sm:px-8"
         >
           <div className="mx-auto w-full max-w-7xl flex justify-end">
             <div className="max-w-xl rounded-sm border border-white/20 bg-black/60 p-8 backdrop-blur-md sm:p-12">
@@ -155,7 +154,7 @@ function Home() {
         </section>
 
         {/* ── ROOM 3: BEDROOM ── */}
-        <section id="bedroom" className="flex h-[120svh] w-full items-center px-5 sm:px-8">
+        <section id="bedroom" className="flex h-[100svh] w-full items-center px-5 sm:px-8">
           <div className="mx-auto w-full max-w-7xl">
             <div className="max-w-xl rounded-sm border border-white/20 bg-black/60 p-8 backdrop-blur-md sm:p-12">
               <p className="label-caps text-brass">03 · Bedroom Interiors</p>
@@ -173,7 +172,7 @@ function Home() {
         {/* ── ROOM 4: OFFICE ── */}
         <section
           id="office"
-          className="flex h-[120svh] w-full items-center justify-end px-5 sm:px-8"
+          className="flex h-[100svh] w-full items-center justify-end px-5 sm:px-8"
         >
           <div className="mx-auto w-full max-w-7xl flex justify-end">
             <div className="max-w-xl rounded-sm border border-white/20 bg-black/60 p-8 backdrop-blur-md sm:p-12">

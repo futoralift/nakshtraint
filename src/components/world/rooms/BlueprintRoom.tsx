@@ -8,6 +8,9 @@ import * as THREE from "three";
 
 const BRASS = "#c9a45a";
 
+const outerBoxGeo = new THREE.BoxGeometry(4.5, 3.0, 4.5);
+const innerBoxGeo = new THREE.BoxGeometry(2.2, 2.2, 2.2);
+
 export function BlueprintRoom({ position = [0, 0, -70] as [number, number, number] }) {
   const groupRef = useRef<THREE.Group>(null);
 
@@ -26,13 +29,13 @@ export function BlueprintRoom({ position = [0, 0, -70] as [number, number, numbe
       <group ref={groupRef} position={[0, 1.2, 0]}>
         {/* Outer cube wireframe */}
         <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(4.5, 3.0, 4.5)]} />
+          <edgesGeometry args={[outerBoxGeo]} />
           <lineBasicMaterial color={BRASS} linewidth={1.5} transparent opacity={0.65} />
         </lineSegments>
 
         {/* Inner room division wireframes */}
         <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(2.2, 2.2, 2.2)]} />
+          <edgesGeometry args={[innerBoxGeo]} />
           <lineBasicMaterial color="#ffffff" linewidth={1} transparent opacity={0.35} />
         </lineSegments>
 

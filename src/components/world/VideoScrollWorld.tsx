@@ -16,9 +16,10 @@ export function VideoScrollWorld({
   const firstImageRef = useRef<HTMLImageElement | null>(null);
   const smoothProgressRef = useRef(0);
 
-  // Preload lightweight 80KB frame images into RAM
+  // Preload lightweight frame images into RAM
   useEffect(() => {
     let cancelled = false;
+    imagesRef.current = new Array(frameCount).fill(null);
 
     // Load first frame immediately for 0ms render
     const firstImg = new Image();
@@ -46,23 +47,34 @@ export function VideoScrollWorld({
     };
   }, [frameCount, ext]);
 
-  // 60FPS Hardware-Accelerated Canvas Render Loop with ultra-smooth lerp momentum physics
+  // 60FPS Hardware-Accelerated Canvas Render Loop with time-damped lerp and idle loop pause
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
-    let animId: number;
+    let animId: number | null = null;
+    let lastTime = performance.now();
+    let isRunning = false;
 
-    const render = () => {
-      if (!ctx) return;
+    const render = (now: number) => {
+      if (!ctx || !canvas) return;
+      const delta = Math.min(0.1, (now - lastTime) / 1000);
+      lastTime = now;
+
       const cw = canvas.width;
       const ch = canvas.height;
       const images = imagesRef.current;
 
-      // Apply smooth lerp easing curve to scroll progress for butter-smooth camera movement
+      // Apply frame-rate independent time-damped exponential easing to scroll progress
       const targetP = Math.max(0, Math.min(1, scrollProgress.current));
-      smoothProgressRef.current += (targetP - smoothProgressRef.current) * 0.12;
-      const p = smoothProgressRef.current;
+      const diff = targetP - smoothProgressRef.current;
+
+      if (Math.abs(diff) < 0.00005 || targetP >= 0.999) {
+        smoothProgressRef.current = targetP >= 0.999 ? 1.0 : targetP;
+      } else {
+        smoothProgressRef.current += diff * (1 - Math.exp(-12 * delta));
+      }
+      const p = Math.min(1.0, Math.max(0.0, smoothProgressRef.current));
 
       const exactIndex = p * (frameCount - 1);
       const indexLow = Math.floor(exactIndex);
@@ -102,25 +114,52 @@ export function VideoScrollWorld({
         ctx.drawImage(activeImg, dx, dy, dw, dh);
 
         // Sub-frame smooth alpha crossfade for sub-pixel frame transitions
-        const nextImg = images[indexHigh];
-        if (
-          blend > 0.01 &&
-          nextImg &&
-          nextImg !== activeImg &&
-          nextImg.complete &&
-          nextImg.naturalWidth > 0
-        ) {
-          ctx.globalAlpha = blend;
-          ctx.drawImage(nextImg, dx, dy, dw, dh);
-          ctx.globalAlpha = 1.0;
+        if (indexHigh > indexLow && blend > 0.02 && p < 0.999) {
+          const nextImg = images[indexHigh];
+          if (
+            nextImg &&
+            nextImg !== activeImg &&
+            nextImg.complete &&
+            nextImg.naturalWidth > 0
+          ) {
+            ctx.globalAlpha = blend;
+            ctx.drawImage(nextImg, dx, dy, dw, dh);
+            ctx.globalAlpha = 1.0;
+          }
         }
       }
 
-      animId = requestAnimationFrame(render);
+      // Continue rendering if lerp is actively moving or continue loop
+      if (Math.abs(targetP - smoothProgressRef.current) >= 0.00005) {
+        animId = requestAnimationFrame(render);
+      } else {
+        isRunning = false;
+        animId = null;
+      }
     };
 
-    animId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(animId);
+    const requestRender = () => {
+      if (!isRunning) {
+        isRunning = true;
+        lastTime = performance.now();
+        animId = requestAnimationFrame(render);
+      }
+    };
+
+    requestRender();
+
+    const onScrollOrResize = () => {
+      requestRender();
+    };
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+
+    return () => {
+      if (animId !== null) cancelAnimationFrame(animId);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
   }, [frameCount, scrollProgress]);
 
   // High DPI Canvas resize handler

@@ -21,7 +21,7 @@ const sanitize = (value: string) =>
 export const leadInputSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120).transform(sanitize),
   phone: phoneSchema,
-  email: z.string().trim().toLowerCase().email("Enter a valid email address.").max(160),
+  email: z.string().trim().toLowerCase().email("Enter a valid email address.").max(160).optional().or(z.literal("")),
   location: z.string().trim().min(2, "Please enter your location.").max(160).transform(sanitize),
   projectTimeline: z.string().trim().max(60).optional().or(z.literal("")),
   serviceInterest: z.array(z.string().trim().max(60)).max(10).optional(),
@@ -41,7 +41,7 @@ export const submitLead = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: allowed } = await supabaseAdmin.rpc("bump_rate_limit", {
-      _key: `lead:${data.email}`,
+      _key: `lead:${data.phone}`,
       _limit: 5,
       _window_seconds: 3600,
     });
@@ -55,7 +55,7 @@ export const submitLead = createServerFn({ method: "POST" })
     const { data: existing } = await supabaseAdmin
       .from("leads")
       .select("id, submission_count, requirements, service_interest")
-      .or(`phone.eq.${data.phone},email.eq.${data.email}`)
+      .eq("phone", data.phone)
       .gte("created_at", since)
       .order("created_at", { ascending: false })
       .limit(1)
@@ -70,7 +70,7 @@ export const submitLead = createServerFn({ method: "POST" })
         .update({
           full_name: data.fullName,
           phone: data.phone,
-          email: data.email,
+          email: data.email || null,
           location: data.location,
           project_timeline: data.projectTimeline || null,
           service_interest: mergedServices,
@@ -88,7 +88,7 @@ export const submitLead = createServerFn({ method: "POST" })
     const { error } = await supabaseAdmin.from("leads").insert({
       full_name: data.fullName,
       phone: data.phone,
-      email: data.email,
+      email: data.email || null,
       location: data.location,
       project_timeline: data.projectTimeline || null,
       service_interest: services,

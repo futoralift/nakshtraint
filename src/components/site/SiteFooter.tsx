@@ -77,11 +77,20 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-background/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-background/50 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-xs text-background/70 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© {new Date().getFullYear()} Nakshtra Interior. All rights reserved.</p>
-          <Link to="/admin" className="hover:text-background/80">
-            Admin
-          </Link>
+          <div className="flex items-center gap-4">
+            <a
+              href={`tel:${SITE.phoneTel}`}
+              className="inline-flex items-center gap-1.5 font-medium text-brass transition-colors hover:underline"
+            >
+              <Phone className="size-3.5" /> Call {SITE.phoneDisplay}
+            </a>
+            <span className="text-background/30">·</span>
+            <Link to="/admin" className="hover:text-background">
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

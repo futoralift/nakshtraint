@@ -10,26 +10,27 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
+
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     const tl = gsap.timeline({
       delay: 0.25,
       onComplete: () => {
-        onComplete();
+        onCompleteRef.current();
         if (wrapperRef.current) wrapperRef.current.style.display = "none";
       },
     });
 
     tl
-      // Gold seam line flashes on first
-      .fromTo(lineRef.current, { scaleY: 0 }, { scaleY: 1, duration: 0.4, ease: "expo.out" })
-      // Logo zooms in from the center seam
+      // Logo zooms in from the center
       .fromTo(
         logoRef.current,
         { scale: 0.08, opacity: 0, filter: "blur(20px)" },
         { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.5, ease: "expo.out" },
-        "-=0.2",
       )
       // Hold — let the user read
       .to({}, { duration: 0.85 })
@@ -40,8 +41,6 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         ease: "expo.inOut",
       })
       .to(rightRef.current, { xPercent: 100, duration: 1.9, ease: "expo.inOut" }, "<")
-      // Gold line retracts
-      .to(lineRef.current, { scaleY: 0, duration: 0.5, ease: "expo.in" }, "<0.1")
       // Logo fades and scales into the world
       .to(
         logoRef.current,
@@ -52,7 +51,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
     return () => {
       tl.kill();
     };
-  }, [onComplete]);
+  }, []);
 
   return (
     <div ref={wrapperRef} className="fixed inset-0 z-[9999] overflow-hidden" aria-hidden="true">
@@ -69,14 +68,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
         style={{ background: "linear-gradient(to left, #020c04, #060f07)" }}
       />
 
-      {/* Gold seam line at the center join */}
-      <div
-        ref={lineRef}
-        className="absolute inset-y-0 left-1/2 -translate-x-px w-0.5 z-20 origin-top"
-        style={{
-          background: "linear-gradient(to bottom, transparent, oklch(0.72 0.075 84), transparent)",
-        }}
-      />
+
 
       {/* Logo centered */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4">
@@ -95,7 +87,7 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
               className="label-caps text-brass"
               style={{ letterSpacing: "0.5em", fontSize: "0.6rem" }}
             >
-              Interior Design Studio
+              Interior Design
             </p>
             <p
               className="label-caps text-background/40"

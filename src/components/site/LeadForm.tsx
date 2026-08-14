@@ -30,7 +30,6 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
     const payload = {
       fullName: String(form.get("fullName") ?? ""),
       phone: String(form.get("phone") ?? ""),
-      email: String(form.get("email") ?? ""),
       location: String(form.get("location") ?? ""),
       projectTimeline: String(form.get("projectTimeline") ?? ""),
       requirements: String(form.get("requirements") ?? ""),
@@ -104,19 +103,7 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
           />
           {errors["phone"] ? <p className="text-xs text-destructive">{errors["phone"]}</p> : null}
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email Address *</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className={fieldClass("email")}
-            aria-invalid={!!errors["email"]}
-          />
-          {errors["email"] ? <p className="text-xs text-destructive">{errors["email"]}</p> : null}
-        </div>
+
         <div className="space-y-2">
           <Label htmlFor="location">Location *</Label>
           <Input
@@ -134,14 +121,14 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="projectTimeline">Project Timeline</Label>
+        <Label htmlFor="projectTimeline">Possession</Label>
         <select
           id="projectTimeline"
           name="projectTimeline"
           defaultValue=""
           className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
-          <option value="">Select a timeline</option>
+          <option value="">When do you get possession?</option>
           {TIMELINES.map((option) => (
             <option key={option} value={option}>
               {option}

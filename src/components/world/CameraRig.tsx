@@ -41,15 +41,16 @@ export function CameraRig({ scrollProgress }: { scrollProgress: MutableRefObject
   const liveTarget = useRef(new THREE.Vector3(0, 1.4, 0));
 
   useFrame(({ camera }, delta) => {
-    // Ease the raw scroll value for smooth camera motion
-    smooth.current += (scrollProgress.current - smooth.current) * Math.min(1, delta * 3.5);
+    // Ease the raw scroll value for smooth frame-rate independent camera motion
+    const dt = Math.min(0.1, delta);
+    smooth.current += (scrollProgress.current - smooth.current) * (1 - Math.exp(-6.0 * dt));
     const p = Math.max(0, Math.min(1, smooth.current));
 
     posCurve.getPoint(p, _pos);
     tgtCurve.getPoint(p, _tgt);
 
     camera.position.copy(_pos);
-    liveTarget.current.lerp(_tgt, 0.1);
+    liveTarget.current.lerp(_tgt, 1 - Math.exp(-8.0 * dt));
     camera.lookAt(liveTarget.current);
   });
 
