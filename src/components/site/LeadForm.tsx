@@ -10,16 +10,55 @@ import { SERVICE_INTERESTS, TIMELINES } from "@/lib/site";
 
 type Errors = Partial<Record<string, string>>;
 
+const ACCEPTED = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+const MAX_BYTES = 5 * 1024 * 1024;
+
+const fileToBase64 = (file: File) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("READ_FAILED"));
+    reader.onload = () => {
+      const result = String(reader.result ?? "");
+      resolve(result.slice(result.indexOf(",") + 1));
+    };
+    reader.readAsDataURL(file);
+  });
+
 export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
   const [services, setServices] = useState<string[]>([]);
   const [errors, setErrors] = useState<Errors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [floorPlan, setFloorPlan] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
 
   const toggleService = (service: string) => {
     setServices((prev) =>
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service],
     );
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    if (!file) {
+      setFloorPlan(null);
+      setFileError(null);
+      return;
+    }
+    if (!ACCEPTED.includes(file.type)) {
+      setFloorPlan(null);
+      setFileError("Please upload a JPG, PNG, WEBP or PDF file.");
+      event.target.value = "";
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      setFloorPlan(null);
+      setFileError("File is too large. Maximum size is 5 MB.");
+      event.target.value = "";
+      return;
+    }
+    setFileError(null);
+    setFloorPlan(file);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,12 +92,23 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
     setSubmitting(true);
 
     try {
-      await submitLead({ data: payload });
+      const filePart = floorPlan
+        ? {
+            floorPlan: {
+              name: floorPlan.name,
+              type: floorPlan.type as "image/jpeg" | "image/png" | "image/webp" | "application/pdf",
+              data: await fileToBase64(floorPlan),
+            },
+          }
+        : {};
+      await submitLead({ data: { ...payload, ...filePart } });
       onSuccess();
     } catch (error) {
       const message = error instanceof Error ? error.message : "";
       if (message.includes("TOO_MANY_REQUESTS")) {
         setFormError("You've sent a few enquiries already. Please try again a little later.");
+      } else if (message.includes("FILE_TOO_LARGE") || message.includes("UPLOAD_FAILED")) {
+        setFormError("We couldn't upload your floor plan. Please try a smaller file.");
       } else if (typeof navigator !== "undefined" && !navigator.onLine) {
         setFormError("Connection issue. Please check your internet connection and try again.");
       } else {
@@ -68,6 +118,7 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
       setSubmitting(false);
     }
   };
+
 
   const fieldClass = (key: string) =>
     errors[key] ? "border-destructive focus-visible:ring-destructive" : "";
