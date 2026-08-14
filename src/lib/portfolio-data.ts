@@ -1,3 +1,4 @@
+
 export type RoomData = {
   id: string;
   name: string;

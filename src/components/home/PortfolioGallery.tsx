@@ -142,14 +142,23 @@ function RoomGallery({
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  // Safely manage body overflow for lightbox with cleanup on unmount
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [lightboxIndex]);
+
   const openLightbox = useCallback((i: number) => {
     setLightboxIndex(i);
-    document.body.style.overflow = "hidden";
   }, []);
 
   const closeLightbox = useCallback(() => {
     setLightboxIndex(null);
-    document.body.style.overflow = "";
   }, []);
 
   const prev = useCallback(() => {
