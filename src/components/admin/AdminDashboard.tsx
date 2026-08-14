@@ -93,9 +93,9 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
     const list = leads.filter((lead) => {
       const matchesTerm =
         !term ||
-        [lead.full_name, lead.phone, lead.email, lead.location].some((value) =>
-          value.toLowerCase().includes(term),
-        );
+        [lead.full_name, lead.phone, lead.email, lead.location]
+          .filter((v): v is string => Boolean(v))
+          .some((value) => value.toLowerCase().includes(term));
       const matchesStatus = statusFilter === "All" || lead.status === statusFilter;
       const matchesService =
         serviceFilter === "All" || (lead.service_interest ?? []).includes(serviceFilter);

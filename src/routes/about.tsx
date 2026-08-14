@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import renovationImg from "@/assets/scene-renovation.jpg";
+import renovationImg from "@/assets/scene-renovation.webp";
 import { FinalCta } from "@/components/home/FinalCta";
 import { WhySection } from "@/components/home/TiersSection";
 import { SiteLayout } from "@/components/site/SiteLayout";

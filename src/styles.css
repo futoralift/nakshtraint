@@ -216,6 +216,30 @@
   }
 }
 
+/* Portfolio project / room card — consistent tall aspect ratio */
+@utility portfolio-card {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -8px oklch(0 0 0 / 45%);
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

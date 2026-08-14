@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-import bedroom from "@/assets/scene-bedroom.jpg";
+import bedroom from "@/assets/scene-bedroom.webp";
 import { Button } from "@/components/ui/button";
 import { SITE, whatsappUrl } from "@/lib/site";
 

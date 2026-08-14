@@ -9,41 +9,67 @@ interface VideoScrollWorldProps {
 export function VideoScrollWorld({
   scrollProgress,
   frameCount = 220,
-  ext = "jpg",
+  ext = "webp",
 }: VideoScrollWorldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(frameCount).fill(null));
   const firstImageRef = useRef<HTMLImageElement | null>(null);
   const smoothProgressRef = useRef(0);
 
-  // Preload lightweight frame images into RAM
+  // Progressive frame loader: loads immediate frames first, then batches the rest smoothly
   useEffect(() => {
     let cancelled = false;
     imagesRef.current = new Array(frameCount).fill(null);
 
-    // Load first frame immediately for 0ms render
+    // 1. Load first frame immediately with high priority
     const firstImg = new Image();
     firstImg.src = `/frames/frame_001.${ext}`;
     firstImg.onload = () => {
-      if (!cancelled) firstImageRef.current = firstImg;
+      if (!cancelled) {
+        firstImageRef.current = firstImg;
+        imagesRef.current[0] = firstImg;
+      }
     };
 
-    // Preload remaining frames
-    for (let i = 1; i <= frameCount; i++) {
+    // 2. Load next initial batch (frames 2-25) for immediate scrolling
+    const initialBatch = Math.min(25, frameCount);
+    for (let i = 2; i <= initialBatch; i++) {
       const index = i - 1;
       const num = String(i).padStart(3, "0");
       const img = new Image();
       img.src = `/frames/frame_${num}.${ext}`;
-
       img.onload = () => {
-        if (!cancelled) {
-          imagesRef.current[index] = img;
-        }
+        if (!cancelled) imagesRef.current[index] = img;
       };
     }
 
+    // 3. Incrementally load remaining frames in small batches so network queue stays clear
+    let currentIndex = initialBatch + 1;
+    let timerId: number | null = null;
+
+    const loadNextBatch = () => {
+      if (cancelled || currentIndex > frameCount) return;
+      const batchEnd = Math.min(currentIndex + 15, frameCount + 1);
+      for (let i = currentIndex; i < batchEnd; i++) {
+        const index = i - 1;
+        const num = String(i).padStart(3, "0");
+        const img = new Image();
+        img.src = `/frames/frame_${num}.${ext}`;
+        img.onload = () => {
+          if (!cancelled) imagesRef.current[index] = img;
+        };
+      }
+      currentIndex = batchEnd;
+      if (currentIndex <= frameCount) {
+        timerId = window.setTimeout(loadNextBatch, 30);
+      }
+    };
+
+    timerId = window.setTimeout(loadNextBatch, 80);
+
     return () => {
       cancelled = true;
+      if (timerId !== null) clearTimeout(timerId);
     };
   }, [frameCount, ext]);
 

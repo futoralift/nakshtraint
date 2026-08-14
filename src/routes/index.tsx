@@ -76,12 +76,12 @@ function Home() {
       <CurtainIntro onComplete={() => {}} />
 
       {/* 🎥 220 Ultra-Lightweight Compressed Image Sequence Background */}
-      <VideoScrollWorld scrollProgress={scrollProgress} frameCount={220} ext="jpg" />
+      <VideoScrollWorld scrollProgress={scrollProgress} frameCount={220} ext="webp" />
 
       {/* 📜 Scrollable overlay story track */}
       <div ref={trackRef} className="relative z-10">
         {/* ── HERO OVERLAY (Room 0: Entry / Wide View) — 100vh perfectly positioned ── */}
-        <section className="relative flex h-[100svh] w-full flex-col justify-end px-5 pb-16 sm:px-8 sm:pb-20">
+        <section className="relative flex h-[100svh] w-full flex-col justify-center px-5 pb-16 sm:justify-end sm:px-8 sm:pb-20">
           <div className="mx-auto w-full max-w-7xl">
             <p className="label-caps text-brass">Nakshtra Interior · Pune</p>
             <h1 className="mt-4 max-w-3xl text-[clamp(2.4rem,6.5vw,5rem)] leading-[0.95] text-background">
@@ -95,7 +95,7 @@ function Home() {
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" variant="secondary">
-                <a href="#living">Explore Spaces</a>
+                <a href="#portfolio">View Portfolio</a>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link to="/contact">Book a Consultation</Link>
