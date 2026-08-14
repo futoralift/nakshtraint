@@ -4,6 +4,8 @@ import { FinalCta } from "@/components/home/FinalCta";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { BlueprintSection } from "@/components/home/BlueprintSection";
 import { TiersSection } from "@/components/home/TiersSection";
+import { BrandSection } from "@/components/home/BrandSection";
+import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { SiteLayout } from "@/components/site/SiteLayout";
 
 const TITLE = "Interior Design Services in Pune | Nakshtra Interior";
@@ -41,6 +43,8 @@ function ServicesPage() {
       <ServicesGrid heading="OUR SERVICES" />
       <BlueprintSection />
       <TiersSection />
+      <BrandSection />
+      <ReviewsSection />
       <FinalCta />
     </SiteLayout>
   );

@@ -7,6 +7,8 @@ import { VideoScrollWorld } from "@/components/world/VideoScrollWorld";
 import { PortfolioOverview } from "@/components/home/PortfolioOverview";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { TiersSection, WhySection } from "@/components/home/TiersSection";
+import { BrandSection } from "@/components/home/BrandSection";
+import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { FinalCta } from "@/components/home/FinalCta";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -201,6 +203,8 @@ function Home() {
           <PortfolioOverview intro="A look at the environments we design — select any project to view rooms and spaces." />
         </div>
         <TiersSection />
+        <BrandSection />
+        <ReviewsSection />
         <WhySection />
         <FinalCta />
       </div>
