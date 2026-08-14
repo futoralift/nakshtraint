@@ -33,22 +33,19 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 }
 
 function createSupabaseAdminClient() {
-  const SUPABASE_URL = globalThis.process?.env?.["SUPABASE_URL"];
-  const SUPABASE_SERVICE_ROLE_KEY = globalThis.process?.env?.["SUPABASE_SERVICE_ROLE_KEY"];
+  const SUPABASE_URL =
+    globalThis.process?.env?.["SUPABASE_URL"] ||
+    globalThis.process?.env?.["VITE_SUPABASE_URL"] ||
+    "https://nsbaxhrxbbwrsmudikix.supabase.co";
+  const SUPABASE_KEY =
+    globalThis.process?.env?.["SUPABASE_SERVICE_ROLE_KEY"] ||
+    globalThis.process?.env?.["SUPABASE_PUBLISHABLE_KEY"] ||
+    globalThis.process?.env?.["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+    "sb_publishable_-Bu8v_QYDO_GLBZ0fcTETw_q4XMEx7d";
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-    const missing = [
-      ...(!SUPABASE_URL ? ["SUPABASE_URL"] : []),
-      ...(!SUPABASE_SERVICE_ROLE_KEY ? ["SUPABASE_SERVICE_ROLE_KEY"] : []),
-    ];
-    const message = `Missing Supabase environment variable(s): ${missing.join(", ")}. Connect Supabase in Lovable Cloud.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
-  }
-
-  return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+  return createClient<Database>(SUPABASE_URL, SUPABASE_KEY, {
     global: {
-      fetch: createSupabaseFetch(SUPABASE_SERVICE_ROLE_KEY),
+      fetch: createSupabaseFetch(SUPABASE_KEY),
     },
     auth: {
       storage: undefined,
