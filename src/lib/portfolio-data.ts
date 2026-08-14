@@ -250,3 +250,19 @@ export const PORTFOLIO_PROJECTS: ProjectData[] = [
   },
 ];
 
+export function getProjectById(projectId: string): ProjectData | undefined {
+  return PORTFOLIO_PROJECTS.find((p) => p.id === projectId);
+}
+
+export function getRoomById(
+  projectId: string,
+  roomId: string,
+): { project: ProjectData; room: RoomData } | undefined {
+  const project = getProjectById(projectId);
+  if (!project) return undefined;
+  const room = project.rooms.find((r) => r.id === roomId);
+  if (!room) return undefined;
+  return { project, room };
+}
+
+

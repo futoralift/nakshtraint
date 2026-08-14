@@ -4,7 +4,7 @@ import Lenis from "lenis";
 
 import { CurtainIntro } from "@/components/world/CurtainIntro";
 import { VideoScrollWorld } from "@/components/world/VideoScrollWorld";
-import { PortfolioGallery } from "@/components/home/PortfolioGallery";
+import { PortfolioOverview } from "@/components/home/PortfolioOverview";
 import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { TiersSection, WhySection } from "@/components/home/TiersSection";
 import { FinalCta } from "@/components/home/FinalCta";
@@ -200,7 +200,7 @@ function Home() {
       <div className="relative z-20 bg-background">
         <ServicesGrid />
         <div id="work">
-          <PortfolioGallery intro="A look at the environments we design — presented as project boards." />
+          <PortfolioOverview intro="A look at the environments we design — select any project to view rooms and spaces." />
         </div>
         <TiersSection />
         <WhySection />
