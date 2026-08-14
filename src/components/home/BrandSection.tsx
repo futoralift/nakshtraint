@@ -14,7 +14,7 @@ export function BrandSection() {
 
       <div ref={ref} data-visible={visible} className="reveal relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-12 lg:items-center">
-          {/* Left Column: Brand Story & 30 Happy Clients Highlight */}
+          {/* Left Column: Brand Story & 200+ Happy Clients Highlight */}
           <div className="lg:col-span-6 xl:col-span-7">
             <div className="inline-flex items-center gap-2 rounded-full border border-brass/30 bg-brass/10 px-3.5 py-1 text-xs font-medium text-brass">
               <Sparkles className="size-3.5" />
@@ -36,12 +36,12 @@ export function BrandSection() {
 
             {/* Metrics & Milestones Grid */}
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-4 border-y border-white/15 py-6">
-              {/* Highlight: 30 Happy Clients */}
+              {/* Highlight: 200+ Happy Clients */}
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 text-brass">
                   <Users className="size-5" />
                   <span className="display text-3xl sm:text-4xl font-normal text-background tracking-tight">
-                    30+
+                    200+
                   </span>
                 </div>
                 <span className="mt-1 text-xs font-medium uppercase tracking-wider text-brass">
