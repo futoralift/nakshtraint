@@ -1,20 +1,28 @@
 import "./lib/error-capture";
 
 // Ensure createMiddleware is defined globally if Nitro SSR bundle tree-shaking omits it
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 if (typeof (globalThis as any).createMiddleware !== "function") {
   const createMiddlewareImpl = (options: unknown, __opts: unknown) => {
     const resolvedOptions = { type: "request", ...((__opts as object) || (options as object)) };
     const setValidator = (validator: unknown) =>
-      createMiddlewareImpl({}, Object.assign(resolvedOptions, { validator, inputValidator: validator }));
+      createMiddlewareImpl(
+        {},
+        Object.assign(resolvedOptions, { validator, inputValidator: validator }),
+      );
     return {
       options: resolvedOptions,
-      middleware: (m: unknown) => createMiddlewareImpl({}, Object.assign(resolvedOptions, { middleware: m })),
+      middleware: (m: unknown) =>
+        createMiddlewareImpl({}, Object.assign(resolvedOptions, { middleware: m })),
       validator: setValidator,
       inputValidator: setValidator,
-      client: (c: unknown) => createMiddlewareImpl({}, Object.assign(resolvedOptions, { client: c })),
-      server: (s: unknown) => createMiddlewareImpl({}, Object.assign(resolvedOptions, { server: s })),
+      client: (c: unknown) =>
+        createMiddlewareImpl({}, Object.assign(resolvedOptions, { client: c })),
+      server: (s: unknown) =>
+        createMiddlewareImpl({}, Object.assign(resolvedOptions, { server: s })),
     };
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (globalThis as any).createMiddleware = createMiddlewareImpl;
 }
 

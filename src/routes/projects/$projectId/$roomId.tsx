@@ -214,7 +214,9 @@ function RoomGalleryPage() {
             <span className="text-2xl" aria-hidden="true">
               {room.icon}
             </span>
-            <p className="label-caps text-brass text-[0.65rem]">{project.title} · {project.location}</p>
+            <p className="label-caps text-brass text-[0.65rem]">
+              {project.title} · {project.location}
+            </p>
           </div>
 
           <h1 className="mt-2 max-w-3xl text-[clamp(1.8rem,4vw,2.8rem)] leading-[1.05]">

@@ -90,7 +90,10 @@ function Lightbox({
         <button
           type="button"
           aria-label="Previous image"
-          onClick={(e) => { e.stopPropagation(); onPrev(); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
           className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
         >
           <ChevronLeft className="size-6" />
@@ -98,7 +101,10 @@ function Lightbox({
       )}
 
       {/* Image */}
-      <figure className="flex max-h-[90svh] max-w-[90vw] items-center justify-center" onClick={(e) => e.stopPropagation()}>
+      <figure
+        className="flex max-h-[90svh] max-w-[90vw] items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           key={images[index]}
           src={images[index]}
@@ -113,7 +119,10 @@ function Lightbox({
         <button
           type="button"
           aria-label="Next image"
-          onClick={(e) => { e.stopPropagation(); onNext(); }}
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
           className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
         >
           <ChevronRight className="size-6" />
@@ -257,17 +266,20 @@ function RoomsGrid({
       <div className="mb-10">
         <h3 className="display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight">{project.title}</h3>
         <p className="text-sm text-muted-foreground mt-1">{project.location}</p>
-        <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">{project.tagline}</p>
+        <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
+          {project.tagline}
+        </p>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {project.rooms.map((room) => (
           <button
             key={room.id}
             type="button"
             id={`room-card-${room.id}`}
             onClick={() => onSelectRoom(room)}
-            className="group relative overflow-hidden bg-[#1a1a1a] text-left focus-visible:ring-2 focus-visible:ring-forest focus-visible:outline-none portfolio-card"
+            className="group relative w-full overflow-hidden bg-[#1a1a1a] text-left focus-visible:ring-2 focus-visible:ring-forest focus-visible:outline-none portfolio-card"
+            style={{ display: "block" }}
           >
             <img
               src={room.cover}
@@ -279,7 +291,9 @@ function RoomsGrid({
             <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <span className="absolute inset-x-0 bottom-0 p-4">
               <RoomIcon icon={room.icon} className="text-lg block mb-1" />
-              <span className="display block text-base text-background leading-tight">{room.name}</span>
+              <span className="display block text-base text-background leading-tight">
+                {room.name}
+              </span>
               <span className="label-caps text-brass/80 text-[0.6rem] mt-1 block">
                 {room.images.length} photos
               </span>
@@ -294,11 +308,7 @@ function RoomsGrid({
 // ---------------------------------------------------------------------------
 // Level 1 — Projects Grid
 // ---------------------------------------------------------------------------
-function ProjectsGrid({
-  onSelectProject,
-}: {
-  onSelectProject: (project: ProjectData) => void;
-}) {
+function ProjectsGrid({ onSelectProject }: { onSelectProject: (project: ProjectData) => void }) {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {PORTFOLIO_PROJECTS.map((project) => (
@@ -322,8 +332,12 @@ function ProjectsGrid({
           <span className="absolute inset-0 bg-forest/0 transition-colors duration-500 group-hover:bg-forest/25" />
           {/* Text */}
           <span className="absolute inset-x-0 bottom-0 p-5">
-            <span className="label-caps text-brass block text-[0.6rem] mb-1">{project.location}</span>
-            <span className="display block text-lg text-background leading-snug">{project.title}</span>
+            <span className="label-caps text-brass block text-[0.6rem] mb-1">
+              {project.location}
+            </span>
+            <span className="display block text-lg text-background leading-snug">
+              {project.title}
+            </span>
             <span className="label-caps text-background/50 text-[0.55rem] mt-1.5 block opacity-0 translate-y-1 transition-all duration-400 group-hover:opacity-100 group-hover:translate-y-0">
               {project.rooms.length} spaces →
             </span>
@@ -409,26 +423,16 @@ export function PortfolioGallery({
         </div>
 
         {/* Level 1 */}
-        {view === "projects" && (
-          <ProjectsGrid onSelectProject={goToRooms} />
-        )}
+        {view === "projects" && <ProjectsGrid onSelectProject={goToRooms} />}
 
         {/* Level 2 */}
         {view === "rooms" && selectedProject && (
-          <RoomsGrid
-            project={selectedProject}
-            onSelectRoom={goToGallery}
-            onBack={goBack}
-          />
+          <RoomsGrid project={selectedProject} onSelectRoom={goToGallery} onBack={goBack} />
         )}
 
         {/* Level 3 */}
         {view === "gallery" && selectedProject && selectedRoom && (
-          <RoomGallery
-            project={selectedProject}
-            room={selectedRoom}
-            onBack={goBack}
-          />
+          <RoomGallery project={selectedProject} room={selectedRoom} onBack={goBack} />
         )}
       </div>
     </section>

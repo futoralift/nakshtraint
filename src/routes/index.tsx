@@ -68,11 +68,9 @@ function Home() {
     };
 
     rafId = requestAnimationFrame(update);
-    window.addEventListener("scroll", calculateProgress, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", calculateProgress);
       lenis.destroy();
     };
   }, []);

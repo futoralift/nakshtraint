@@ -56,11 +56,11 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>() {
 
     let frame = 0;
     const update = () => {
-      frame = 0;
       const rect = node.getBoundingClientRect();
       const total = rect.height + window.innerHeight;
       const value = (window.innerHeight - rect.top) / total;
       setProgress(Math.min(1, Math.max(0, value)));
+      frame = 0;
     };
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
@@ -68,7 +68,7 @@ export function useScrollProgress<T extends HTMLElement = HTMLDivElement>() {
 
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);

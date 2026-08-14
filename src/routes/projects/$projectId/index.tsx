@@ -99,8 +99,8 @@ function ProjectDetailPage() {
             </p>
           </div>
 
-          {/* 1 in a row with image on top and name below */}
-          <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto">
+          {/* 1 col on mobile, 2 col on laptop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {project.rooms.map((room) => (
               <Link
                 key={room.id}

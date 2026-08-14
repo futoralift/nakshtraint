@@ -1,4 +1,3 @@
-
 export type RoomData = {
   id: string;
   name: string;
@@ -163,7 +162,6 @@ const p3Rooms: RoomData[] = [
   },
 ];
 
-
 // ---------------------------------------------------------------------------
 // PROJECT 4 — Ambegaon BK Family Home
 // ---------------------------------------------------------------------------
@@ -264,5 +262,3 @@ export function getRoomById(
   if (!room) return undefined;
   return { project, room };
 }
-
-

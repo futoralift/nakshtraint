@@ -118,8 +118,6 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
       setSubmitting(false);
     }
   };
-
-
   const fieldClass = (key: string) =>
     errors[key] ? "border-destructive focus-visible:ring-destructive" : "";
 
@@ -240,8 +238,6 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
           </p>
         )}
       </div>
-
-
 
       {formError ? (
         <p role="alert" className="text-sm text-destructive">

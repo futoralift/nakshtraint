@@ -19,12 +19,8 @@ export function ServicesGrid({ heading = "WHAT WE DESIGN" }: { heading?: string 
           {SERVICES.map((service, index) => (
             <li key={service.slug} className="group relative bg-forest-deep">
               <article className="relative h-full overflow-hidden p-8 transition-[transform,background-color,box-shadow] duration-500 group-hover:-translate-y-1 group-hover:bg-forest group-hover:shadow-2xl sm:p-10">
-                <span className="label-caps text-brass">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-5 text-2xl text-background">
-                  {service.title}
-                </h3>
+                <span className="label-caps text-brass">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="mt-5 text-2xl text-background">{service.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-background/80">
                   {service.description}
                 </p>

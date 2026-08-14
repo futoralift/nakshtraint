@@ -63,16 +63,13 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
   const rawLeads = leadsQuery.data;
   const leads = useMemo(() => rawLeads ?? [], [rawLeads]);
 
-  const stats = useMemo(
-    () => ({
-      total: leads.length,
-      New: leads.filter((l) => l.status === "New").length,
-      Contacted: leads.filter((l) => l.status === "Contacted").length,
-      Qualified: leads.filter((l) => l.status === "Qualified").length,
-      Converted: leads.filter((l) => l.status === "Converted").length,
-    }),
-    [leads],
-  );
+  const stats = useMemo(() => {
+    const counts = { New: 0, Contacted: 0, Qualified: 0, Converted: 0 };
+    for (const l of leads) {
+      if (l.status in counts) counts[l.status as keyof typeof counts]++;
+    }
+    return { total: leads.length, ...counts };
+  }, [leads]);
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();

@@ -35,7 +35,14 @@ const floorPlanSchema = z.object({
 export const leadInputSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120).transform(sanitize),
   phone: phoneSchema,
-  email: z.string().trim().toLowerCase().email("Enter a valid email address.").max(160).optional().or(z.literal("")),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .email("Enter a valid email address.")
+    .max(160)
+    .optional()
+    .or(z.literal("")),
   location: z.string().trim().min(2, "Please enter your location.").max(160).transform(sanitize),
   projectTimeline: z.string().trim().max(60).optional().or(z.literal("")),
   serviceInterest: z.array(z.string().trim().max(60)).max(10).optional(),
@@ -49,7 +56,6 @@ export const leadInputSchema = z.object({
 });
 
 export type LeadInput = z.input<typeof leadInputSchema>;
-
 
 export const submitLead = createServerFn({ method: "POST" })
   .validator((data: LeadInput) => leadInputSchema.parse(data))
@@ -121,7 +127,9 @@ export const submitLead = createServerFn({ method: "POST" })
     try {
       const { data: existingLead } = await supabaseAdmin
         .from("leads")
-        .select("id, submission_count, requirements, service_interest, floor_plan_path, floor_plan_name")
+        .select(
+          "id, submission_count, requirements, service_interest, floor_plan_path, floor_plan_name",
+        )
         .eq("phone", data.phone)
         .gte("created_at", since)
         .order("created_at", { ascending: false })
@@ -174,17 +182,20 @@ export const submitLead = createServerFn({ method: "POST" })
     if (insertError) {
       console.error("lead insert warning:", insertError);
       // Log full lead info in server logs to ensure inquiry is never lost
-      console.info("[LEAD SUBMISSION RECEIVED]", JSON.stringify({
-        fullName: data.fullName,
-        phone: data.phone,
-        email: data.email,
-        location: data.location,
-        projectTimeline: data.projectTimeline,
-        serviceInterest: services,
-        requirements: data.requirements,
-        floorPlan: floorPlanName,
-        submittedAt: new Date().toISOString(),
-      }));
+      console.info(
+        "[LEAD SUBMISSION RECEIVED]",
+        JSON.stringify({
+          fullName: data.fullName,
+          phone: data.phone,
+          email: data.email,
+          location: data.location,
+          projectTimeline: data.projectTimeline,
+          serviceInterest: services,
+          requirements: data.requirements,
+          floorPlan: floorPlanName,
+          submittedAt: new Date().toISOString(),
+        }),
+      );
     }
 
     return { ok: true as const, duplicate: false as const };
@@ -207,9 +218,7 @@ const constantTimeEquals = (a: string, b: string) => {
 export const adminLogin = createServerFn({ method: "POST" })
   .validator((data: { email: string; password: string }) => loginSchema.parse(data))
   .handler(async ({ data }) => {
-    const adminEmail = (
-      globalThis.process?.env?.["ADMIN_EMAIL"] ?? "nakshtrainterior@gmail.com"
-    )
+    const adminEmail = (globalThis.process?.env?.["ADMIN_EMAIL"] ?? "nakshtrainterior@gmail.com")
       .trim()
       .toLowerCase();
     const adminPassword = globalThis.process?.env?.["ADMIN_PASSWORD"] ?? "nakint@11";

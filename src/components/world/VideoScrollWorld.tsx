@@ -1,4 +1,4 @@
-import { type MutableRefObject, useEffect, useRef } from "react";
+import { type MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 interface VideoScrollWorldProps {
   scrollProgress: MutableRefObject<number>;
@@ -18,22 +18,25 @@ export function VideoScrollWorld({
   const smoothProgressRef = useRef(0);
 
   // Helper to load a single frame asynchronously
-  const loadFrame = (index: number) => {
-    if (index < 0 || index >= frameCount) return;
-    if (imagesRef.current[index] || loadingStatusRef.current[index]) return;
+  const loadFrame = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= frameCount) return;
+      if (imagesRef.current[index] || loadingStatusRef.current[index]) return;
 
-    loadingStatusRef.current[index] = true;
-    const num = String(index + 1).padStart(3, "0");
-    const img = new Image();
-    img.decoding = "async";
-    img.src = `/frames/frame_${num}.${ext}`;
-    img.onload = () => {
-      imagesRef.current[index] = img;
-      if (index === 0 && !firstImageRef.current) {
-        firstImageRef.current = img;
-      }
-    };
-  };
+      loadingStatusRef.current[index] = true;
+      const num = String(index + 1).padStart(3, "0");
+      const img = new Image();
+      img.decoding = "async";
+      img.src = `/frames/frame_${num}.${ext}`;
+      img.onload = () => {
+        imagesRef.current[index] = img;
+        if (index === 0 && !firstImageRef.current) {
+          firstImageRef.current = img;
+        }
+      };
+    },
+    [frameCount, ext],
+  );
 
   // Progressive Smart Frame Loader:
   // Phase 1: Load frame 1 immediately
@@ -87,7 +90,7 @@ export function VideoScrollWorld({
       cancelled = true;
       if (timerId !== null) clearTimeout(timerId);
     };
-  }, [frameCount, ext]);
+  }, [frameCount, ext, loadFrame]);
 
   // Priority on-demand loader when user scrolls to a specific position
   useEffect(() => {
@@ -104,7 +107,7 @@ export function VideoScrollWorld({
 
     window.addEventListener("scroll", handleScrollDemand, { passive: true });
     return () => window.removeEventListener("scroll", handleScrollDemand);
-  }, [frameCount]);
+  }, [frameCount, loadFrame, scrollProgress]);
 
   // 60FPS Hardware-Accelerated Canvas Render Loop with time-damped lerp and idle loop pause
   useEffect(() => {
@@ -186,12 +189,7 @@ export function VideoScrollWorld({
         // Sub-frame smooth alpha crossfade for sub-pixel frame transitions
         if (indexHigh > indexLow && blend > 0.02 && p < 0.999) {
           const nextImg = images[indexHigh];
-          if (
-            nextImg &&
-            nextImg !== activeImg &&
-            nextImg.complete &&
-            nextImg.naturalWidth > 0
-          ) {
+          if (nextImg && nextImg !== activeImg && nextImg.complete && nextImg.naturalWidth > 0) {
             ctx.globalAlpha = blend;
             ctx.drawImage(nextImg, dx, dy, dw, dh);
             ctx.globalAlpha = 1.0;
@@ -218,19 +216,15 @@ export function VideoScrollWorld({
 
     requestRender();
 
-    const onScrollOrResize = () => {
-      requestRender();
-    };
-
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
+    window.addEventListener("scroll", requestRender, { passive: true });
+    window.addEventListener("resize", requestRender);
 
     return () => {
       if (animId !== null) cancelAnimationFrame(animId);
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
+      window.removeEventListener("scroll", requestRender);
+      window.removeEventListener("resize", requestRender);
     };
-  }, [frameCount, scrollProgress]);
+  }, [frameCount, loadFrame, scrollProgress]);
 
   // Canvas resize handler (capped at 1.5 dpr on mobile to preserve GPU bandwidth & memory)
   useEffect(() => {
