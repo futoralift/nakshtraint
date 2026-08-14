@@ -18,6 +18,20 @@ const sanitize = (value: string) =>
     .trim()
     .slice(0, 2000);
 
+const ALLOWED_FLOOR_PLAN_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+] as const;
+
+const floorPlanSchema = z.object({
+  name: z.string().trim().min(1).max(160),
+  type: z.enum(ALLOWED_FLOOR_PLAN_TYPES),
+  // base64 (no data-url prefix); ~5MB binary limit
+  data: z.string().min(1).max(7_500_000),
+});
+
 export const leadInputSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120).transform(sanitize),
   phone: phoneSchema,
@@ -31,9 +45,11 @@ export const leadInputSchema = z.object({
     .max(2000)
     .optional()
     .transform((v) => (v ? sanitize(v) : v)),
+  floorPlan: floorPlanSchema.optional().nullable(),
 });
 
 export type LeadInput = z.input<typeof leadInputSchema>;
+
 
 export const submitLead = createServerFn({ method: "POST" })
   .validator((data: LeadInput) => leadInputSchema.parse(data))
@@ -52,9 +68,32 @@ export const submitLead = createServerFn({ method: "POST" })
     const services = (data.serviceInterest ?? []).filter(Boolean);
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
+    let floorPlanPath: string | null = null;
+    let floorPlanName: string | null = null;
+
+    if (data.floorPlan) {
+      const binary = Uint8Array.from(atob(data.floorPlan.data), (c) => c.charCodeAt(0));
+      if (binary.byteLength > 5 * 1024 * 1024) {
+        throw new Error("FILE_TOO_LARGE");
+      }
+      const ext = data.floorPlan.type === "application/pdf"
+        ? "pdf"
+        : data.floorPlan.type.replace("image/", "").replace("jpeg", "jpg");
+      const path = `${data.phone.replace(/\D/g, "")}/${Date.now()}.${ext}`;
+      const upload = await supabaseAdmin.storage
+        .from("floor-plans")
+        .upload(path, binary, { contentType: data.floorPlan.type, upsert: false });
+      if (upload.error) {
+        console.error("floor plan upload failed", upload.error);
+        throw new Error("UPLOAD_FAILED");
+      }
+      floorPlanPath = path;
+      floorPlanName = sanitize(data.floorPlan.name).slice(0, 160);
+    }
+
     const { data: existing } = await supabaseAdmin
       .from("leads")
-      .select("id, submission_count, requirements, service_interest")
+      .select("id, submission_count, requirements, service_interest, floor_plan_path, floor_plan_name")
       .eq("phone", data.phone)
       .gte("created_at", since)
       .order("created_at", { ascending: false })
@@ -75,6 +114,8 @@ export const submitLead = createServerFn({ method: "POST" })
           project_timeline: data.projectTimeline || null,
           service_interest: mergedServices,
           requirements: data.requirements || existing.requirements || null,
+          floor_plan_path: floorPlanPath ?? existing.floor_plan_path,
+          floor_plan_name: floorPlanName ?? existing.floor_plan_name,
           submission_count: (existing.submission_count ?? 1) + 1,
         })
         .eq("id", existing.id);
@@ -93,8 +134,11 @@ export const submitLead = createServerFn({ method: "POST" })
       project_timeline: data.projectTimeline || null,
       service_interest: services,
       requirements: data.requirements || null,
+      floor_plan_path: floorPlanPath,
+      floor_plan_name: floorPlanName,
       source: "Website Popup",
     });
+
 
     if (error) {
       console.error("lead insert failed", error);

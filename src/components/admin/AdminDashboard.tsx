@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Loader2, Mail, MessageCircle, Phone, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 
@@ -9,21 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { LEAD_STATUSES, SERVICE_INTERESTS, type LeadStatus } from "@/lib/site";
-
-type Lead = {
-  id: string;
-  full_name: string;
-  phone: string;
-  email: string;
-  location: string;
-  project_timeline: string | null;
-  service_interest: string[] | null;
-  requirements: string | null;
-  source: string;
-  status: LeadStatus;
-  submission_count: number;
-  created_at: string;
-};
+import { LeadDetailDialog, type LeadRecord as Lead } from "@/components/admin/LeadDetailDialog";
 
 const NAV = ["Overview", "Leads", "Settings"] as const;
 
@@ -52,7 +38,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       const { data, error } = await supabase
         .from("leads")
         .select(
-          "id, full_name, phone, email, location, project_timeline, service_interest, requirements, source, status, submission_count, created_at",
+          "id, full_name, phone, email, location, project_timeline, service_interest, requirements, source, status, submission_count, created_at, floor_plan_path, floor_plan_name",
         )
         .order("created_at", { ascending: false });
       if (error) throw error;
@@ -309,7 +295,7 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
                         >
                           <td className="px-4 py-3 font-medium">{lead.full_name}</td>
                           <td className="px-4 py-3">{lead.phone}</td>
-                          <td className="px-4 py-3">{lead.email}</td>
+                          <td className="px-4 py-3">{lead.email ?? "—"}</td>
                           <td className="px-4 py-3">{lead.location}</td>
                           <td className="px-4 py-3 text-muted-foreground">
                             {(lead.service_interest ?? []).join(", ") || "—"}
@@ -349,103 +335,12 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
       </div>
 
       {selected ? (
-        <div
-          className="fixed inset-0 z-50 flex justify-end bg-forest-deep/50"
-          onClick={() => setSelected(null)}
-        >
-          <aside
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Lead details for ${selected.full_name}`}
-            className="h-full w-full max-w-md overflow-y-auto bg-card p-6"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="label-caps text-wood">Lead</p>
-                <h2 className="display mt-2 text-2xl text-forest">{selected.full_name}</h2>
-              </div>
-              <button
-                type="button"
-                aria-label="Close lead details"
-                onClick={() => setSelected(null)}
-                className="rounded-full p-2 text-muted-foreground hover:bg-muted"
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-
-            <div className="mt-6 flex gap-2">
-              <Button asChild size="sm" variant="outline">
-                <a href={`tel:${selected.phone}`}>
-                  <Phone className="size-4" /> Call
-                </a>
-              </Button>
-              <Button asChild size="sm" variant="outline">
-                <a
-                  href={`https://wa.me/${selected.phone.replace(/\D/g, "")}`}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <MessageCircle className="size-4" /> WhatsApp
-                </a>
-              </Button>
-              <Button asChild size="sm" variant="outline">
-                <a href={`mailto:${selected.email}`}>
-                  <Mail className="size-4" /> Email
-                </a>
-              </Button>
-            </div>
-
-            <dl className="mt-8 space-y-4 text-sm">
-              {(
-                [
-                  ["Phone", selected.phone],
-                  ["Email", selected.email],
-                  ["Location", selected.location],
-                  ["Project Timeline", selected.project_timeline ?? "—"],
-                  ["Service Interest", (selected.service_interest ?? []).join(", ") || "—"],
-                  ["Requirements", selected.requirements ?? "—"],
-                  ["Source", selected.source],
-                  ["Submitted", formatDate(selected.created_at)],
-                  ["Submissions", String(selected.submission_count)],
-                ] as const
-              ).map(([label, value]) => (
-                <div key={label} className="border-b border-border pb-3">
-                  <dt className="label-caps text-muted-foreground">{label}</dt>
-                  <dd className="mt-1 break-words">{value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-8 space-y-2">
-              <Label htmlFor="lead-status">Current Status</Label>
-              <div className="flex items-center gap-3">
-                <select
-                  id="lead-status"
-                  value={selected.status}
-                  disabled={updateStatus.isPending}
-                  onChange={(event) =>
-                    updateStatus.mutate({
-                      id: selected.id,
-                      status: event.target.value as LeadStatus,
-                    })
-                  }
-                  className="h-9 flex-1 rounded-md border border-input bg-transparent px-3 text-sm"
-                >
-                  {LEAD_STATUSES.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-                {updateStatus.isPending ? (
-                  <Loader2 className="size-4 animate-spin text-muted-foreground" />
-                ) : null}
-              </div>
-            </div>
-          </aside>
-        </div>
+        <LeadDetailDialog
+          lead={selected}
+          onClose={() => setSelected(null)}
+          statusPending={updateStatus.isPending}
+          onStatusChange={(status) => updateStatus.mutate({ id: selected.id, status })}
+        />
       ) : null}
     </div>
   );

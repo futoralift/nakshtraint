@@ -18,6 +18,8 @@ export type Database = {
         Row: {
           created_at: string
           email: string | null
+          floor_plan_name: string | null
+          floor_plan_path: string | null
           full_name: string
           id: string
           location: string
@@ -33,6 +35,8 @@ export type Database = {
         Insert: {
           created_at?: string
           email?: string | null
+          floor_plan_name?: string | null
+          floor_plan_path?: string | null
           full_name: string
           id?: string
           location: string
@@ -48,6 +52,8 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string | null
+          floor_plan_name?: string | null
+          floor_plan_path?: string | null
           full_name?: string
           id?: string
           location?: string
