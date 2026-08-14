@@ -222,6 +222,27 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
         />
       </div>
 
+      <div className="space-y-2">
+        <Label htmlFor="floorPlan">Floor Plan (optional)</Label>
+        <input
+          id="floorPlan"
+          name="floorPlan"
+          type="file"
+          accept="image/jpeg,image/png,image/webp,application/pdf"
+          onChange={handleFileChange}
+          className="block w-full cursor-pointer rounded-md border border-input bg-transparent px-3 py-2 text-sm file:mr-3 file:rounded-sm file:border-0 file:bg-forest file:px-3 file:py-1 file:text-xs file:text-primary-foreground"
+        />
+        {fileError ? (
+          <p className="text-xs text-destructive">{fileError}</p>
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            {floorPlan ? `Attached: ${floorPlan.name}` : "JPG, PNG, WEBP or PDF · up to 5 MB"}
+          </p>
+        )}
+      </div>
+
+
+
       {formError ? (
         <p role="alert" className="text-sm text-destructive">
           {formError}
