@@ -163,6 +163,55 @@ const p3Rooms: RoomData[] = [
   },
 ];
 
+
+// ---------------------------------------------------------------------------
+// PROJECT 4 — Ambegaon BK Family Home
+// ---------------------------------------------------------------------------
+const p4Rooms: RoomData[] = [
+  {
+    id: "p4-entrance",
+    name: "Entrance",
+    icon: "🚪",
+    cover: "/projects/p4/entrance/img-01.webp",
+    images: imgs("p4", "entrance", 6),
+  },
+  {
+    id: "p4-living-room",
+    name: "Living Room",
+    icon: "🛋️",
+    cover: "/projects/p4/living-room/img-01.webp",
+    images: imgs("p4", "living-room", 8),
+  },
+  {
+    id: "p4-kitchen",
+    name: "Kitchen",
+    icon: "🍳",
+    cover: "/projects/p4/kitchen/img-01.webp",
+    images: imgs("p4", "kitchen", 8),
+  },
+  {
+    id: "p4-master",
+    name: "Master Bedroom",
+    icon: "🛏️",
+    cover: "/projects/p4/master/img-01.webp",
+    images: imgs("p4", "master", 6),
+  },
+  {
+    id: "p4-kids-room",
+    name: "Kids Room",
+    icon: "🎨",
+    cover: "/projects/p4/kids-room/img-01.webp",
+    images: imgs("p4", "kids-room", 7),
+  },
+  {
+    id: "p4-parents",
+    name: "Parents Room",
+    icon: "🌿",
+    cover: "/projects/p4/parents/img-01.webp",
+    images: imgs("p4", "parents", 7),
+  },
+];
+
 // ---------------------------------------------------------------------------
 // MASTER LIST
 // ---------------------------------------------------------------------------
@@ -191,4 +240,13 @@ export const PORTFOLIO_PROJECTS: ProjectData[] = [
     cover: "/projects/p3/living-room/img-01.webp",
     rooms: p3Rooms,
   },
+  {
+    id: "p4",
+    title: "Ambegaon BK Residence",
+    location: "Ambegaon BK, Pune",
+    tagline: "A complete family home crafted with warmth, colour and functional design.",
+    cover: "/projects/p4/living-room/img-01.webp",
+    rooms: p4Rooms,
+  },
 ];
+
