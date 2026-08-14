@@ -68,9 +68,32 @@ export const submitLead = createServerFn({ method: "POST" })
     const services = (data.serviceInterest ?? []).filter(Boolean);
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
+    let floorPlanPath: string | null = null;
+    let floorPlanName: string | null = null;
+
+    if (data.floorPlan) {
+      const binary = Uint8Array.from(atob(data.floorPlan.data), (c) => c.charCodeAt(0));
+      if (binary.byteLength > 5 * 1024 * 1024) {
+        throw new Error("FILE_TOO_LARGE");
+      }
+      const ext = data.floorPlan.type === "application/pdf"
+        ? "pdf"
+        : data.floorPlan.type.replace("image/", "").replace("jpeg", "jpg");
+      const path = `${data.phone.replace(/\D/g, "")}/${Date.now()}.${ext}`;
+      const upload = await supabaseAdmin.storage
+        .from("floor-plans")
+        .upload(path, binary, { contentType: data.floorPlan.type, upsert: false });
+      if (upload.error) {
+        console.error("floor plan upload failed", upload.error);
+        throw new Error("UPLOAD_FAILED");
+      }
+      floorPlanPath = path;
+      floorPlanName = sanitize(data.floorPlan.name).slice(0, 160);
+    }
+
     const { data: existing } = await supabaseAdmin
       .from("leads")
-      .select("id, submission_count, requirements, service_interest")
+      .select("id, submission_count, requirements, service_interest, floor_plan_path, floor_plan_name")
       .eq("phone", data.phone)
       .gte("created_at", since)
       .order("created_at", { ascending: false })
@@ -91,6 +114,8 @@ export const submitLead = createServerFn({ method: "POST" })
           project_timeline: data.projectTimeline || null,
           service_interest: mergedServices,
           requirements: data.requirements || existing.requirements || null,
+          floor_plan_path: floorPlanPath ?? existing.floor_plan_path,
+          floor_plan_name: floorPlanName ?? existing.floor_plan_name,
           submission_count: (existing.submission_count ?? 1) + 1,
         })
         .eq("id", existing.id);
@@ -109,8 +134,11 @@ export const submitLead = createServerFn({ method: "POST" })
       project_timeline: data.projectTimeline || null,
       service_interest: services,
       requirements: data.requirements || null,
+      floor_plan_path: floorPlanPath,
+      floor_plan_name: floorPlanName,
       source: "Website Popup",
     });
+
 
     if (error) {
       console.error("lead insert failed", error);
