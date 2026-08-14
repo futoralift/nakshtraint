@@ -18,6 +18,20 @@ const sanitize = (value: string) =>
     .trim()
     .slice(0, 2000);
 
+const ALLOWED_FLOOR_PLAN_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+] as const;
+
+const floorPlanSchema = z.object({
+  name: z.string().trim().min(1).max(160),
+  type: z.enum(ALLOWED_FLOOR_PLAN_TYPES),
+  // base64 (no data-url prefix); ~5MB binary limit
+  data: z.string().min(1).max(7_500_000),
+});
+
 export const leadInputSchema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120).transform(sanitize),
   phone: phoneSchema,
@@ -31,9 +45,11 @@ export const leadInputSchema = z.object({
     .max(2000)
     .optional()
     .transform((v) => (v ? sanitize(v) : v)),
+  floorPlan: floorPlanSchema.optional().nullable(),
 });
 
 export type LeadInput = z.input<typeof leadInputSchema>;
+
 
 export const submitLead = createServerFn({ method: "POST" })
   .validator((data: LeadInput) => leadInputSchema.parse(data))
