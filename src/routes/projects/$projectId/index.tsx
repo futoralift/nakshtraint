@@ -99,39 +99,46 @@ function ProjectDetailPage() {
             </p>
           </div>
 
-          {/* 2 in a row in mobile, 4 in a row in laptop */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+          {/* 1 in a row with image on top and name below */}
+          <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto">
             {project.rooms.map((room) => (
               <Link
                 key={room.id}
                 to="/projects/$projectId/$roomId"
                 params={{ projectId: project.id, roomId: room.id }}
                 id={`room-card-${room.id}`}
-                className="group relative overflow-hidden bg-[#1a1a1a] text-left focus-visible:ring-2 focus-visible:ring-forest focus-visible:outline-none portfolio-card rounded-sm"
+                className="group block overflow-hidden rounded-md border border-border/70 bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-forest focus-visible:outline-none"
               >
-                <img
-                  src={room.cover}
-                  alt={room.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Dark gradient overlay */}
-                <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
-                {/* Hover tint */}
-                <span className="absolute inset-0 bg-forest/0 transition-colors duration-500 group-hover:bg-forest/25" />
-                {/* Room Info */}
-                <span className="absolute inset-x-0 bottom-0 p-3 sm:p-5">
-                  <span className="text-xl sm:text-2xl block mb-1" aria-hidden="true">
-                    {room.icon}
+                {/* Image on top */}
+                <div className="aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-[#1a1a1a]">
+                  <img
+                    src={room.cover}
+                    alt={room.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Name & Details down below */}
+                <div className="p-4 sm:p-5 flex items-center justify-between bg-card">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl sm:text-3xl" aria-hidden="true">
+                      {room.icon}
+                    </span>
+                    <div>
+                      <h3 className="display text-lg sm:text-xl text-foreground group-hover:text-forest transition-colors leading-tight">
+                        {room.name}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {room.images.length} High-Resolution Photographs
+                      </p>
+                    </div>
+                  </div>
+                  <span className="label-caps text-forest text-xs font-semibold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    View Gallery →
                   </span>
-                  <span className="display block text-sm sm:text-lg text-background leading-snug">
-                    {room.name}
-                  </span>
-                  <span className="label-caps text-brass text-[0.55rem] sm:text-[0.6rem] mt-1.5 flex items-center gap-1 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                    {room.images.length} photos →
-                  </span>
-                </span>
+                </div>
               </Link>
             ))}
           </div>
