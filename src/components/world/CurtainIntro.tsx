@@ -17,11 +17,22 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
   }, [onComplete]);
 
   useEffect(() => {
+    // Safety fallback: guaranteed cleanup after 4s so UI is never stuck on mobile
+    const fallbackTimer = window.setTimeout(() => {
+      onCompleteRef.current();
+      if (wrapperRef.current) {
+        wrapperRef.current.style.display = "none";
+      }
+    }, 3800);
+
     const tl = gsap.timeline({
-      delay: 0.25,
+      delay: 0.15,
       onComplete: () => {
+        window.clearTimeout(fallbackTimer);
         onCompleteRef.current();
-        if (wrapperRef.current) wrapperRef.current.style.display = "none";
+        if (wrapperRef.current) {
+          wrapperRef.current.style.display = "none";
+        }
       },
     });
 
@@ -30,31 +41,36 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
       .fromTo(
         logoRef.current,
         { scale: 0.08, opacity: 0, filter: "blur(20px)" },
-        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.5, ease: "expo.out" },
+        { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "expo.out" },
       )
       // Hold — let the user read
-      .to({}, { duration: 0.85 })
+      .to({}, { duration: 0.6 })
       // Curtains slide apart revealing the 3D world
       .to(leftRef.current, {
         xPercent: -100,
-        duration: 1.9,
+        duration: 1.5,
         ease: "expo.inOut",
       })
-      .to(rightRef.current, { xPercent: 100, duration: 1.9, ease: "expo.inOut" }, "<")
+      .to(rightRef.current, { xPercent: 100, duration: 1.5, ease: "expo.inOut" }, "<")
       // Logo fades and scales into the world
       .to(
         logoRef.current,
-        { opacity: 0, scale: 2.5, filter: "blur(8px)", duration: 1.1, ease: "power3.out" },
+        { opacity: 0, scale: 2.2, filter: "blur(8px)", duration: 0.9, ease: "power3.out" },
         "<0.15",
       );
 
     return () => {
+      window.clearTimeout(fallbackTimer);
       tl.kill();
     };
   }, []);
 
   return (
-    <div ref={wrapperRef} className="fixed inset-0 z-[9999] overflow-hidden" aria-hidden="true">
+    <div
+      ref={wrapperRef}
+      className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden"
+      aria-hidden="true"
+    >
       {/* Left curtain half */}
       <div
         ref={leftRef}

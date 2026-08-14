@@ -13,65 +13,98 @@ export function VideoScrollWorld({
 }: VideoScrollWorldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imagesRef = useRef<(HTMLImageElement | null)[]>(new Array(frameCount).fill(null));
+  const loadingStatusRef = useRef<boolean[]>(new Array(frameCount).fill(false));
   const firstImageRef = useRef<HTMLImageElement | null>(null);
   const smoothProgressRef = useRef(0);
 
-  // Progressive frame loader: loads immediate frames first, then batches the rest smoothly
+  // Helper to load a single frame asynchronously
+  const loadFrame = (index: number) => {
+    if (index < 0 || index >= frameCount) return;
+    if (imagesRef.current[index] || loadingStatusRef.current[index]) return;
+
+    loadingStatusRef.current[index] = true;
+    const num = String(index + 1).padStart(3, "0");
+    const img = new Image();
+    img.decoding = "async";
+    img.src = `/frames/frame_${num}.${ext}`;
+    img.onload = () => {
+      imagesRef.current[index] = img;
+      if (index === 0 && !firstImageRef.current) {
+        firstImageRef.current = img;
+      }
+    };
+  };
+
+  // Progressive Smart Frame Loader:
+  // Phase 1: Load frame 1 immediately
+  // Phase 2: Load keyframes (every 8th frame) so entire scroll duration has instant visuals
+  // Phase 3: Load initial sequence (frames 1-15) for immediate first scroll
+  // Phase 4: Slowly fill in remaining frames in idle background without choking mobile network/CPU
   useEffect(() => {
     let cancelled = false;
     imagesRef.current = new Array(frameCount).fill(null);
+    loadingStatusRef.current = new Array(frameCount).fill(false);
 
-    // 1. Load first frame immediately with high priority
-    const firstImg = new Image();
-    firstImg.src = `/frames/frame_001.${ext}`;
-    firstImg.onload = () => {
-      if (!cancelled) {
-        firstImageRef.current = firstImg;
-        imagesRef.current[0] = firstImg;
-      }
-    };
+    // 1. First frame immediately
+    loadFrame(0);
 
-    // 2. Load next initial batch (frames 2-25) for immediate scrolling
-    const initialBatch = Math.min(25, frameCount);
-    for (let i = 2; i <= initialBatch; i++) {
-      const index = i - 1;
-      const num = String(i).padStart(3, "0");
-      const img = new Image();
-      img.src = `/frames/frame_${num}.${ext}`;
-      img.onload = () => {
-        if (!cancelled) imagesRef.current[index] = img;
-      };
+    // 2. Load keyframes (every 8th frame: 0, 8, 16, 24... ~27 frames)
+    const keyframeStep = 8;
+    for (let i = 0; i < frameCount; i += keyframeStep) {
+      loadFrame(i);
     }
 
-    // 3. Incrementally load remaining frames in small batches so network queue stays clear
-    let currentIndex = initialBatch + 1;
+    // 3. Load initial sequence (frames 1 to 15) for immediate first scroll
+    for (let i = 1; i <= Math.min(15, frameCount - 1); i++) {
+      loadFrame(i);
+    }
+
+    // 4. Background gentle filler: loads missing frames in gentle small batches
+    let currentFillIndex = 0;
     let timerId: number | null = null;
 
-    const loadNextBatch = () => {
-      if (cancelled || currentIndex > frameCount) return;
-      const batchEnd = Math.min(currentIndex + 15, frameCount + 1);
-      for (let i = currentIndex; i < batchEnd; i++) {
-        const index = i - 1;
-        const num = String(i).padStart(3, "0");
-        const img = new Image();
-        img.src = `/frames/frame_${num}.${ext}`;
-        img.onload = () => {
-          if (!cancelled) imagesRef.current[index] = img;
-        };
+    const fillNextBatch = () => {
+      if (cancelled || currentFillIndex >= frameCount) return;
+
+      let loadedCount = 0;
+      while (currentFillIndex < frameCount && loadedCount < 4) {
+        if (!imagesRef.current[currentFillIndex] && !loadingStatusRef.current[currentFillIndex]) {
+          loadFrame(currentFillIndex);
+          loadedCount++;
+        }
+        currentFillIndex++;
       }
-      currentIndex = batchEnd;
-      if (currentIndex <= frameCount) {
-        timerId = window.setTimeout(loadNextBatch, 30);
+
+      if (currentFillIndex < frameCount) {
+        timerId = window.setTimeout(fillNextBatch, 100);
       }
     };
 
-    timerId = window.setTimeout(loadNextBatch, 80);
+    // Start background fill after 300ms to let critical page assets finish loading
+    timerId = window.setTimeout(fillNextBatch, 300);
 
     return () => {
       cancelled = true;
       if (timerId !== null) clearTimeout(timerId);
     };
   }, [frameCount, ext]);
+
+  // Priority on-demand loader when user scrolls to a specific position
+  useEffect(() => {
+    const handleScrollDemand = () => {
+      const p = Math.max(0, Math.min(1, scrollProgress.current));
+      const targetIndex = Math.round(p * (frameCount - 1));
+      // Load 6 frames before and 10 frames ahead of current position with high priority
+      const start = Math.max(0, targetIndex - 6);
+      const end = Math.min(frameCount - 1, targetIndex + 10);
+      for (let i = start; i <= end; i++) {
+        loadFrame(i);
+      }
+    };
+
+    window.addEventListener("scroll", handleScrollDemand, { passive: true });
+    return () => window.removeEventListener("scroll", handleScrollDemand);
+  }, [frameCount]);
 
   // 60FPS Hardware-Accelerated Canvas Render Loop with time-damped lerp and idle loop pause
   useEffect(() => {
@@ -98,7 +131,7 @@ export function VideoScrollWorld({
       if (Math.abs(diff) < 0.00005 || targetP >= 0.999) {
         smoothProgressRef.current = targetP >= 0.999 ? 1.0 : targetP;
       } else {
-        smoothProgressRef.current += diff * (1 - Math.exp(-12 * delta));
+        smoothProgressRef.current += diff * (1 - Math.exp(-14 * delta));
       }
       const p = Math.min(1.0, Math.max(0.0, smoothProgressRef.current));
 
@@ -113,6 +146,17 @@ export function VideoScrollWorld({
       // Search backward for nearest ready frame if current frame is loading
       if (!activeImg || !activeImg.complete || activeImg.naturalWidth === 0) {
         for (let j = indexLow - 1; j >= 0; j--) {
+          const candidate = images[j];
+          if (candidate && candidate.complete && candidate.naturalWidth > 0) {
+            activeImg = candidate;
+            break;
+          }
+        }
+      }
+
+      // Search forward if backward didn't find anything
+      if (!activeImg || !activeImg.complete || activeImg.naturalWidth === 0) {
+        for (let j = indexLow + 1; j < frameCount; j++) {
           const candidate = images[j];
           if (candidate && candidate.complete && candidate.naturalWidth > 0) {
             activeImg = candidate;
@@ -188,12 +232,12 @@ export function VideoScrollWorld({
     };
   }, [frameCount, scrollProgress]);
 
-  // High DPI Canvas resize handler
+  // Canvas resize handler (capped at 1.5 dpr on mobile to preserve GPU bandwidth & memory)
   useEffect(() => {
     const handleResize = () => {
       const canvas = canvasRef.current;
       if (!canvas) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
     };
@@ -204,10 +248,10 @@ export function VideoScrollWorld({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0 size-full overflow-hidden bg-black">
+    <div className="pointer-events-none fixed inset-0 z-0 size-full overflow-hidden bg-black">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 size-full object-cover will-change-transform"
+        className="pointer-events-none absolute inset-0 size-full object-cover will-change-transform"
         style={{
           transform: "translateZ(0)",
           filter: "brightness(1.02) contrast(1.02)",

@@ -132,12 +132,8 @@
 
   html,
   body {
-    overscroll-behavior-y: none;
     overflow-x: hidden;
-  }
-
-  html {
-    scroll-behavior: smooth;
+    touch-action: pan-y;
   }
 
   body {

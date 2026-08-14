@@ -32,25 +32,24 @@ function Home() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Reset scroll position to top on refresh so frame sequence always starts cleanly at frame 001
+    // Reset scroll position to top on initial mount
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
 
-    // Lenis smooth scroll configuration
+    // Lenis smooth scroll configuration (smooth wheel on desktop, native touch on mobile)
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 0.85,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.0,
+      syncTouch: false,
     });
 
-    let rafId: number;
-    const update = (time: number) => {
-      lenis.raf(time);
+    const calculateProgress = () => {
       if (trackRef.current) {
         const rect = trackRef.current.getBoundingClientRect();
         const maxScroll = rect.height - window.innerHeight;
@@ -59,13 +58,21 @@ function Home() {
           scrollProgress.current = Math.min(1, Math.max(0, current / maxScroll));
         }
       }
+    };
+
+    let rafId: number;
+    const update = (time: number) => {
+      lenis.raf(time);
+      calculateProgress();
       rafId = requestAnimationFrame(update);
     };
 
     rafId = requestAnimationFrame(update);
+    window.addEventListener("scroll", calculateProgress, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", calculateProgress);
       lenis.destroy();
     };
   }, []);
