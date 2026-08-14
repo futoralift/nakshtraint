@@ -23,7 +23,7 @@ export const Route = createFileRoute("/projects/")({
 function ProjectsIndexPage() {
   return (
     <SiteLayout>
-      <section className="bg-forest-deep px-5 pb-20 pt-32 text-background sm:px-8 sm:pb-24 sm:pt-40">
+      <section className="bg-forest-deep px-4 pb-20 pt-32 text-background sm:px-6 lg:px-8 sm:pb-24 sm:pt-40">
         <div className="mx-auto max-w-7xl">
           <p className="label-caps text-brass">Projects</p>
           <h1 className="mt-5 max-w-3xl text-[clamp(2.2rem,5.5vw,4rem)] leading-[1]">
