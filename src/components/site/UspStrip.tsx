@@ -11,7 +11,7 @@ export function UspStrip() {
     <div
       role="region"
       aria-label="Key Highlights"
-      className="relative z-40 w-full overflow-hidden bg-[#183a2c] py-2 sm:py-2.5 border-b border-white/15 text-white select-none shadow-xs"
+      className="relative z-40 w-full overflow-hidden bg-[#183a2c] py-1 sm:py-1.5 border-b border-white/15 text-white select-none shadow-xs"
     >
       <div className="flex items-center">
         <div className="animate-marquee-ltr flex shrink-0 items-center">
@@ -20,11 +20,11 @@ export function UspStrip() {
             <div key={`set-1-${setIdx}`} className="flex items-center shrink-0">
               {USP_ITEMS.map((item, idx) => (
                 <div key={`item-1-${setIdx}-${idx}`} className="flex items-center">
-                  <span className="mx-4 sm:mx-8 flex items-center gap-2 text-xs sm:text-[0.8125rem] font-medium tracking-wide sm:tracking-wider uppercase whitespace-nowrap text-white">
-                    <item.icon className="size-3.5 sm:size-4 text-brass shrink-0" />
+                  <span className="mx-3 sm:mx-6 flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-medium tracking-wide sm:tracking-wider uppercase whitespace-nowrap text-white leading-none">
+                    <item.icon className="size-3 sm:size-3.5 text-brass shrink-0" />
                     <span>{item.text}</span>
                   </span>
-                  <span className="text-brass/70 text-xs select-none">·</span>
+                  <span className="text-brass/70 text-[10px] sm:text-xs select-none">·</span>
                 </div>
               ))}
             </div>
@@ -35,11 +35,11 @@ export function UspStrip() {
             <div key={`set-2-${setIdx}`} className="flex items-center shrink-0" aria-hidden="true">
               {USP_ITEMS.map((item, idx) => (
                 <div key={`item-2-${setIdx}-${idx}`} className="flex items-center">
-                  <span className="mx-4 sm:mx-8 flex items-center gap-2 text-xs sm:text-[0.8125rem] font-medium tracking-wide sm:tracking-wider uppercase whitespace-nowrap text-white">
-                    <item.icon className="size-3.5 sm:size-4 text-brass shrink-0" />
+                  <span className="mx-3 sm:mx-6 flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-medium tracking-wide sm:tracking-wider uppercase whitespace-nowrap text-white leading-none">
+                    <item.icon className="size-3 sm:size-3.5 text-brass shrink-0" />
                     <span>{item.text}</span>
                   </span>
-                  <span className="text-brass/70 text-xs select-none">·</span>
+                  <span className="text-brass/70 text-[10px] sm:text-xs select-none">·</span>
                 </div>
               ))}
             </div>

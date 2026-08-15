@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 
-import { SITE, SERVICES } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 export function SiteFooter() {
   return (
     <footer className="relative z-20 bg-forest-deep text-background border-t border-white/10">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 md:grid-cols-3">
         <div>
           <Link to="/" className="inline-block">
             <img
@@ -41,19 +41,6 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="label-caps text-brass">Services</h2>
-          <ul className="mt-5 space-y-2 text-sm text-background/75">
-            {SERVICES.map((service) => (
-              <li key={service.slug}>
-                <Link to="/services" className="transition-colors hover:text-background">
-                  {service.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
           <h2 className="label-caps text-brass">Quick Links</h2>
           <ul className="mt-5 space-y-2.5 text-sm text-background/75">
             <li>
@@ -64,11 +51,6 @@ export function SiteFooter() {
             <li>
               <Link to="/projects" className="transition-colors hover:text-background">
                 Selected Projects
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="transition-colors hover:text-background">
-                About Studio
               </Link>
             </li>
             <li>

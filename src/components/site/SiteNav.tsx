@@ -35,13 +35,13 @@ export function SiteNav() {
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8"
+        className="mx-auto flex h-12 sm:h-14 max-w-7xl items-center justify-between px-5 sm:px-8"
       >
         <Link to="/" className="group flex items-center gap-3" onClick={() => setOpen(false)}>
           <img
             src="/logo.png"
             alt="Nakshtra Interior"
-            className={`h-9 sm:h-11 w-auto object-contain transition-all duration-300 ${
+            className={`h-7 sm:h-8.5 w-auto object-contain transition-all duration-300 ${
               scrolled ? "brightness-0" : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
             }`}
           />
