@@ -12,21 +12,62 @@ export function BrandSection() {
       <div className="pointer-events-none absolute -top-40 -right-40 size-96 rounded-full bg-brass/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-40 size-96 rounded-full bg-forest/40 blur-3xl" />
 
-      <div ref={ref} data-visible={visible} className="reveal relative mx-auto max-w-6xl px-5 sm:px-8">
+      <div ref={ref} data-visible={visible} className="reveal relative mx-auto max-w-5xl px-5 sm:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full border border-brass/30 bg-brass/10 px-4 py-1 text-xs font-medium text-brass">
             <Sparkles className="size-3.5" />
             <span>The Nakshtra Journey</span>
           </div>
 
-          <h2 className="mt-5 text-[clamp(2.2rem,5vw,3.75rem)] leading-[1.05] text-background">
-            CRAFTING SPACES WITH PASSION &amp; PURPOSE.
+          <h2 className="mt-5 text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.08] text-background">
+            OUR STORY · NAKSHTRA INTERIOR
           </h2>
 
-          <p className="mt-6 text-base sm:text-lg leading-relaxed text-background/85">
-            Founded in Pune by <strong>Mr. Akshay Fulzade</strong>, Nakshtra Interior was born with a singular mission: translating each homeowner&apos;s unique vision, lifestyle, and aspirations into spaces they truly cherish.
+          <p className="mt-3 text-brass font-medium text-sm sm:text-base tracking-wide uppercase">
+            A Journey Started with Passion
           </p>
+
+          {/* Story Narrative */}
+          <div className="mt-8 space-y-5 text-left text-sm sm:text-base leading-relaxed text-background/85">
+            <p>
+              <strong className="text-background font-semibold">Nakshtra Interior was founded by Mr. Akshay Fulzade in 2021</strong> with a vision to transform ordinary spaces into beautiful, functional, and personalized interiors.
+            </p>
+
+            <p>
+              What began as a passion for interior design has grown into a dedicated interior design and execution brand. From the very beginning, <strong className="text-background font-semibold">Mr. Akshay Fulzade</strong> has focused on understanding each client&apos;s lifestyle, requirements, and vision, turning ideas into thoughtfully designed spaces.
+            </p>
+
+            <p>
+              Over the years, Nakshtra Interior has worked on a wide range of projects including <strong className="text-background font-semibold">complete home interiors, living rooms, bedrooms, modular kitchens, wardrobes, TV units, pooja spaces, and customized interior solutions.</strong>
+            </p>
+
+            <p>
+              Our journey has been built on <strong className="text-background font-semibold">creativity, quality, transparency, attention to detail, and customer satisfaction.</strong> We believe an interior is not just about how a space looks, it is about how it feels and how comfortably it fits into everyday life.
+            </p>
+
+            <p>
+              Today, under the vision and leadership of <strong className="text-background font-semibold">Mr. Akshay Fulzade</strong>, Nakshtra Interior continues to create stylish, functional, and meaningful spaces while carrying forward the same passion with which the journey began in <strong className="text-background font-semibold">2021</strong>.
+            </p>
+          </div>
+
+          {/* Vision Callout Box */}
+          <div className="mt-10 rounded-sm border border-brass/30 bg-brass/10 p-6 sm:p-8 text-center backdrop-blur-xs">
+            <p className="label-caps text-brass text-xs font-semibold tracking-widest">
+              OUR VISION
+            </p>
+            <blockquote className="mt-3 display text-xl sm:text-2xl text-background font-normal leading-snug">
+              &ldquo;To design spaces that reflect your personality, lifestyle, and dreams beautifully and meaningfully.&rdquo;
+            </blockquote>
+            <div className="mt-4 flex flex-col items-center gap-1">
+              <span className="font-semibold text-background text-sm tracking-wide">
+                Nakshtra Interior
+              </span>
+              <span className="italic text-xs text-brass/90">
+                Designing Spaces. Creating Experiences.
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* 4 Highlighted Milestone Metric Cards */}
@@ -54,7 +95,7 @@ export function BrandSection() {
             <span className="mt-1 block text-xs font-medium uppercase tracking-wider text-brass">
               Warranty Support
             </span>
-            <span className="text-[0.75rem] text-background/60">Long-term peace of mind</span>
+            <span className="text-[0.75rem] text-background/60">Long term peace of mind</span>
           </div>
 
           <div className="rounded-sm border border-white/15 bg-white/5 p-6 backdrop-blur-xs text-center transition-all duration-300 hover:border-brass/40 hover:bg-white/10">
@@ -67,7 +108,7 @@ export function BrandSection() {
             <span className="mt-1 block text-xs font-medium uppercase tracking-wider text-brass">
               Turnkey Precision
             </span>
-            <span className="text-[0.75rem] text-background/60">Flawless on-time delivery</span>
+            <span className="text-[0.75rem] text-background/60">Flawless on time delivery</span>
           </div>
 
           <div className="rounded-sm border border-white/15 bg-white/5 p-6 backdrop-blur-xs text-center transition-all duration-300 hover:border-brass/40 hover:bg-white/10">
@@ -92,17 +133,17 @@ export function BrandSection() {
               <h3 className="font-semibold text-background text-base">Bespoke 3D Planning</h3>
             </div>
             <p className="text-sm text-background/75 leading-relaxed">
-              Every detail is visualised in photo-realistic 3D before execution, ensuring layout perfection and complete clarity.
+              Every detail is visualised in photo realistic 3D before execution, ensuring layout perfection and complete clarity.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2 text-brass">
               <Layers className="size-5" />
-              <h3 className="font-semibold text-background text-base">End-to-End Execution</h3>
+              <h3 className="font-semibold text-background text-base">End to End Execution</h3>
             </div>
             <p className="text-sm text-background/75 leading-relaxed">
-              From modular kitchen fabrication, civil modifications, false ceiling to custom Devghars — we manage everything with zero stress.
+              From modular kitchen fabrication, civil modifications, false ceiling to custom Devghars, we manage everything with zero stress.
             </p>
           </div>
 
