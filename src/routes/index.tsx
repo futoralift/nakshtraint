@@ -52,27 +52,32 @@ function Home() {
       syncTouch: false,
     });
 
-    const calculateProgress = () => {
+    let maxScroll = 1;
+    const updateDimensions = () => {
       if (trackRef.current) {
-        const rect = trackRef.current.getBoundingClientRect();
-        const maxScroll = rect.height - window.innerHeight;
-        if (maxScroll > 0) {
-          const current = -rect.top;
-          scrollProgress.current = Math.min(1, Math.max(0, current / maxScroll));
-        }
+        maxScroll = Math.max(1, trackRef.current.offsetHeight - window.innerHeight);
       }
     };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions, { passive: true });
+
+    lenis.on("scroll", (e: { scroll: number }) => {
+      if (maxScroll > 0) {
+        scrollProgress.current = Math.min(1, Math.max(0, e.scroll / maxScroll));
+      }
+    });
 
     let rafId: number;
     const update = (time: number) => {
       lenis.raf(time);
-      calculateProgress();
       rafId = requestAnimationFrame(update);
     };
 
     rafId = requestAnimationFrame(update);
 
     return () => {
+      window.removeEventListener("resize", updateDimensions);
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };

@@ -50,19 +50,27 @@ export function ReviewsSection() {
 
   // Responsive items count: Mobile (1 card), Tablet (2 cards), Desktop (3 cards)
   useEffect(() => {
+    let resizeRafId: number | null = null;
     const updateVisibleCount = () => {
-      if (window.innerWidth < 640) {
-        setVisibleCount(1); // Mobile: 1 card
-      } else if (window.innerWidth < 1024) {
-        setVisibleCount(2); // Tablet: 2 cards
-      } else {
-        setVisibleCount(3); // Desktop/Laptop: 3 cards
-      }
+      const w = window.innerWidth;
+      const count = w < 640 ? 1 : w < 1024 ? 2 : 3;
+      setVisibleCount((prev) => (prev === count ? prev : count));
+    };
+
+    const onResize = () => {
+      if (resizeRafId !== null) return;
+      resizeRafId = window.requestAnimationFrame(() => {
+        resizeRafId = null;
+        updateVisibleCount();
+      });
     };
 
     updateVisibleCount();
-    window.addEventListener("resize", updateVisibleCount);
-    return () => window.removeEventListener("resize", updateVisibleCount);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      if (resizeRafId !== null) window.cancelAnimationFrame(resizeRafId);
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
 
   const maxIndex = Math.max(0, REVIEWS.length - visibleCount);

@@ -18,13 +18,21 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let rafId: number | null = null;
     const onScroll = () => {
-      const isScrolled = window.scrollY > 24;
-      setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        const isScrolled = window.scrollY > 24;
+        setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (

@@ -34,6 +34,9 @@ export function VideoScrollWorld({
           firstImageRef.current = img;
         }
       };
+      img.onerror = () => {
+        loadingStatusRef.current[index] = false;
+      };
     },
     [frameCount, ext],
   );
@@ -92,21 +95,34 @@ export function VideoScrollWorld({
     };
   }, [frameCount, ext, loadFrame]);
 
-  // Priority on-demand loader when user scrolls to a specific position
+  // Priority on-demand loader when user scrolls to a specific position (throttled via RAF)
   useEffect(() => {
+    let demandRafId: number | null = null;
+    let lastDemandedIndex = -1;
+
     const handleScrollDemand = () => {
-      const p = Math.max(0, Math.min(1, scrollProgress.current));
-      const targetIndex = Math.round(p * (frameCount - 1));
-      // Load 6 frames before and 10 frames ahead of current position with high priority
-      const start = Math.max(0, targetIndex - 6);
-      const end = Math.min(frameCount - 1, targetIndex + 10);
-      for (let i = start; i <= end; i++) {
-        loadFrame(i);
-      }
+      if (demandRafId !== null) return;
+      demandRafId = window.requestAnimationFrame(() => {
+        demandRafId = null;
+        const p = Math.max(0, Math.min(1, scrollProgress.current));
+        const targetIndex = Math.round(p * (frameCount - 1));
+        if (Math.abs(targetIndex - lastDemandedIndex) < 2) return;
+        lastDemandedIndex = targetIndex;
+
+        // Load 6 frames before and 10 frames ahead of current position with high priority
+        const start = Math.max(0, targetIndex - 6);
+        const end = Math.min(frameCount - 1, targetIndex + 10);
+        for (let i = start; i <= end; i++) {
+          loadFrame(i);
+        }
+      });
     };
 
     window.addEventListener("scroll", handleScrollDemand, { passive: true });
-    return () => window.removeEventListener("scroll", handleScrollDemand);
+    return () => {
+      if (demandRafId !== null) window.cancelAnimationFrame(demandRafId);
+      window.removeEventListener("scroll", handleScrollDemand);
+    };
   }, [frameCount, loadFrame, scrollProgress]);
 
   // 60FPS Hardware-Accelerated Canvas Render Loop with time-damped lerp and idle loop pause
@@ -217,7 +233,7 @@ export function VideoScrollWorld({
     requestRender();
 
     window.addEventListener("scroll", requestRender, { passive: true });
-    window.addEventListener("resize", requestRender);
+    window.addEventListener("resize", requestRender, { passive: true });
 
     return () => {
       if (animId !== null) cancelAnimationFrame(animId);
@@ -237,7 +253,7 @@ export function VideoScrollWorld({
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

@@ -74,19 +74,19 @@ export function CurtainIntro({ onComplete }: CurtainIntroProps) {
       {/* Left curtain half */}
       <div
         ref={leftRef}
-        className="absolute inset-y-0 left-0 w-1/2"
+        className="absolute inset-y-0 left-0 w-1/2 will-change-transform"
         style={{ background: "linear-gradient(to right, #020c04, #060f07)" }}
       />
       {/* Right curtain half */}
       <div
         ref={rightRef}
-        className="absolute inset-y-0 right-0 w-1/2"
+        className="absolute inset-y-0 right-0 w-1/2 will-change-transform"
         style={{ background: "linear-gradient(to left, #020c04, #060f07)" }}
       />
 
       {/* Logo centered */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4">
-        <div ref={logoRef} className="flex flex-col items-center gap-6" style={{ opacity: 0 }}>
+        <div ref={logoRef} className="flex flex-col items-center gap-6 will-change-transform" style={{ opacity: 0 }}>
           <img
             src="/logo.png"
             alt="Nakshtra Interior"
