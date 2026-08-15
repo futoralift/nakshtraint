@@ -25,7 +25,7 @@ export function BrandSection() {
           </h2>
 
           <p className="mt-6 text-base sm:text-lg leading-relaxed text-background/85">
-            Founded in Pune by <strong>Mr. Akshay Fulzade &amp; Mr. Pawan</strong>, Nakshtra Interior was born with a singular mission: translating each homeowner&apos;s unique vision, lifestyle, and aspirations into spaces they truly cherish.
+            Founded in Pune by <strong>Mr. Akshay Fulzade</strong>, Nakshtra Interior was born with a singular mission: translating each homeowner&apos;s unique vision, lifestyle, and aspirations into spaces they truly cherish.
           </p>
         </div>
 

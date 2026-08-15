@@ -23,12 +23,12 @@ export const REVIEWS: ReviewItem[] = [
   },
   {
     id: "review-2",
-    name: "Tushar Gurav",
+    name: "Akash Sharma",
     role: "Homeowner",
     projectType: "2BHK Flat Interior",
     rating: 5,
     content:
-      "Dear Nakshatra Interior Team,\nThank you for the outstanding work on our 2BHK flat!\nKids’ room, Devghar, and modern kitchen designs are simply superb.\nSpace utilization and flexibility with changes impressed us greatly.\nSpecial thanks to Akshay & Pawan Sir we’re loving our new home!",
+      "Dear Nakshatra Interior Team,\nThank you for the outstanding work on our 2BHK flat!\nKids’ room, Devghar, and modern kitchen designs are simply superb.\nSpace utilization and flexibility with changes impressed us greatly.\nSpecial thanks to Akshay Sir we’re loving our new home!",
   },
   {
     id: "review-3",
@@ -37,7 +37,7 @@ export const REVIEWS: ReviewItem[] = [
     projectType: "2BHK Flat Interior",
     rating: 5,
     content:
-      "I recently got my 2BHK flat designed by Nakshatra Interior, and the experience was fantastic.\nAkshay and Pawan guided me throughout with great insights and professionalism.\nThe project was managed efficiently with high-quality work and timely delivery.\nThey were always available, making the process smooth and stress-free.\nHighly recommend Nakshatra Interior my new flat looks amazing!",
+      "I recently got my 2BHK flat designed by Nakshatra Interior, and the experience was fantastic.\nAkshay guided me throughout with great insights and professionalism.\nThe project was managed efficiently with high-quality work and timely delivery.\nThey were always available, making the process smooth and stress-free.\nHighly recommend Nakshatra Interior my new flat looks amazing!",
   },
 ];
 
