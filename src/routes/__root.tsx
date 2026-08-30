@@ -12,6 +12,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
+import { AnalyticsTracker } from "../components/analytics/AnalyticsTracker";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +126,7 @@ function RootComponent() {
       <Outlet />
       <Toaster />
       <Analytics />
+      <AnalyticsTracker />
     </QueryClientProvider>
   );
 }

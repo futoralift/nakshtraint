@@ -10,8 +10,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
 import { LEAD_STATUSES, SERVICE_INTERESTS, type LeadStatus } from "@/lib/site";
 import { LeadDetailDialog, type LeadRecord as Lead } from "@/components/admin/LeadDetailDialog";
+import { AdminAnalytics } from "@/components/admin/AdminAnalytics";
 
-const NAV = ["Overview", "Leads", "Settings"] as const;
+const NAV = ["Overview", "Leads", "Analytics", "Settings"] as const;
 
 const formatDate = (value: string) =>
   new Date(value).toLocaleString("en-IN", {
@@ -134,7 +135,13 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
           <h1 className="display text-2xl uppercase tracking-[0.2em] text-forest">
             Nakshtra Interior
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">Lead Management Dashboard</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {section === "Analytics"
+              ? "Live Visitor Analytics & Traffic Insights"
+              : section === "Settings"
+                ? "Admin Security & Settings"
+                : "Lead Management Dashboard"}
+          </p>
         </header>
 
         {section === "Settings" ? (
@@ -149,6 +156,10 @@ export function AdminDashboard({ onSignOut }: { onSignOut: () => void }) {
               Sign out
             </Button>
           </section>
+        ) : section === "Analytics" ? (
+          <div className="mt-8">
+            <AdminAnalytics />
+          </div>
         ) : (
           <>
             <dl className="mt-8 grid gap-4 sm:grid-cols-3 xl:grid-cols-5">
