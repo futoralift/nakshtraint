@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -254,7 +255,18 @@ export function LeadForm({ onSuccess }: { onSuccess: () => void }) {
           "Get a Consultation"
         )}
       </Button>
-      <p className="text-center text-xs text-muted-foreground">
+      <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
+        By submitting, you agree to our{" "}
+        <Link to="/terms" className="underline underline-offset-2 hover:text-foreground">
+          Terms &amp; Conditions
+        </Link>{" "}
+        and{" "}
+        <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">
+          Privacy Policy
+        </Link>
+        .
+      </p>
+      <p className="text-center text-xs text-muted-foreground/80">
         Serving Ambegaon BK and greater Pune.
       </p>
     </form>

@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="relative z-20 bg-forest-deep text-background border-t border-white/10">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 md:grid-cols-3">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link to="/" className="inline-block">
             <img
@@ -41,11 +41,16 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h2 className="label-caps text-brass">Quick Links</h2>
+          <h2 className="label-caps text-brass">Explore</h2>
           <ul className="mt-5 space-y-2.5 text-sm text-background/75">
             <li>
               <Link to="/" className="transition-colors hover:text-background">
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="transition-colors hover:text-background">
+                Services
               </Link>
             </li>
             <li>
@@ -54,13 +59,44 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/faq" className="font-medium text-brass transition-colors hover:text-background flex items-center gap-1.5">
-                <span>FAQ &amp; Help</span>
+              <Link to="/about" className="transition-colors hover:text-background">
+                About Studio
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className="transition-colors hover:text-background">
+                FAQ &amp; Help
               </Link>
             </li>
             <li>
               <Link to="/contact" className="transition-colors hover:text-background">
                 Book Consultation
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="label-caps text-brass">Trust &amp; Legal</h2>
+          <ul className="mt-5 space-y-2.5 text-sm text-background/75">
+            <li>
+              <Link to="/terms" className="transition-colors hover:text-background">
+                Terms &amp; Conditions
+              </Link>
+            </li>
+            <li>
+              <Link to="/privacy" className="transition-colors hover:text-background">
+                Privacy Policy
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className="transition-colors hover:text-background">
+                10+ Year Warranty
+              </Link>
+            </li>
+            <li>
+              <Link to="/faq" className="transition-colors hover:text-background">
+                Price Lock Guarantee
               </Link>
             </li>
           </ul>
@@ -90,8 +126,17 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-background/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-center px-5 py-6 text-xs text-background/70 sm:px-8 text-center">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 text-xs text-background/70 sm:flex-row sm:px-8 text-center sm:text-left">
           <p>© {new Date().getFullYear()} Nakshtra Interior. All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <Link to="/terms" className="transition-colors hover:text-brass">
+              Terms &amp; Conditions
+            </Link>
+            <span className="text-background/30" aria-hidden="true">•</span>
+            <Link to="/privacy" className="transition-colors hover:text-brass">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
